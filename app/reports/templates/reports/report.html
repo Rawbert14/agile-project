@@ -3,7 +3,95 @@
 {% block title %} report {% endblock title%}
 
 {% block content %} 
-{{form|crispy}}
-<hr>
-{{ pform|crispy }}
+
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="problemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{pform|crispy}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<div class="container bg-white shadow-lg rounded py-2">
+<div class="row">
+<div class="col-2">
+    <form action="" method="POST">
+
+ {{form|crispy}}
+ <button type="submit" class="btn btn-primary w-100 shadow-sm mt-3">
+ <i class="fa-solid fa-share pr-3"></i>Send</button>
+    </form>
+
+</div>
+
+<div class="col-10">
+<div style="overflow-y:scroll" class = "w-100 h-100 bg-light rounded border">
+    <table class="table">
+        <thead class="thead-light">
+            <tr class="text-center">
+                <th scope="col">Day</th>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+                <th scope="col">Product</th>
+                <th scope="col">Plan</th>
+                <th scope="col">Day</th>
+                <th scope="col">Execution</th>
+                <th scope="col">Problems</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for obj in object_list %}
+            <tr class="text-center">
+                <td>{{obj.day}}</td>
+                <td>{{obj.start_hour}}</td>
+                <td>{{obj.end_hour}}</td>
+                <td>{{obj.product}}</td>
+                <td>{{obj.plan}}</td>
+                <td>{{obj.execution}}</td>
+                <td>{{obj.production_line}}</td>
+
+                <td class="fit">
+                    <button class="btn btn-warning"  data-toggle="modal" data-target="#problemModal"><i class="fa-solid fa-exclamation"></i></button>
+                </td>
+
+                <td class="fit">
+                    <a href=""><button class="btn btn-info"><i class="fa-solid fa-gear"></i></button></a>
+                </td>
+
+                <td class="fit">
+                    <a href=""><button class="btn btn-danger"><i class="fa-solid fa-trash-can-arrow-up"></i></button></a>
+                </td>
+
+            </tr>
+        {% endfor %}
+        
+        </tbody>
+
+    </table>
+</div>
+</div>
+
+</div>
+</div>
 {% endblock content %}
