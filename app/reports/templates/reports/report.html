@@ -52,7 +52,7 @@
 </div>
 
 <div class="col-10">
-<div style="overflow-y:scroll" class = "w-100 h-100 bg-light rounded border">
+<div style="overflow-y:scroll; height:100vh" class = "w-100 bg-light rounded border">
     <table class="table">
         <thead class="thead-light">
             <tr class="text-center">
@@ -89,7 +89,7 @@
                 </td>
 
                 <td class="fit">
-                    <a href=""><button class="btn btn-danger"><i class="fa-solid fa-trash-can-arrow-up"></i></button></a>
+                    <a href="{% url "reports:delete-view" pk=obj.id %}"><button class="btn btn-danger"><i class="fa-solid fa-trash-can-arrow-up"></i></button></a>
                 </td>
 
             </tr>

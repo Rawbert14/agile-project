@@ -123,6 +123,8 @@ USE_TZ = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+LOGIN_URL = "/admin/"
+
 
 
 # Static files (CSS, JavaScript, Images)
