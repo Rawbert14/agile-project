@@ -3,7 +3,19 @@ from .forms import ReportForm, ProblemReportedForm
 from .models import Report
 from areas.models import ProductionLine
 from django.contrib.auth.decorators import login_required
+from django.views.generic import UpdateView
 # Create your views here.
+
+
+class ReportUpdateView(UpdateView):
+    model = Report
+    form_class = ReportForm
+    template_name = 'reports/update.html'
+    
+    def get_success_url(self):
+        return self.request.path
+    
+    
 
 
 @login_required

@@ -4,6 +4,7 @@ from django.utils import timezone
 from products.models import Product
 from areas.models import ProductionLine
 from categories.models import Category
+from django.urls import reverse
 import random
 # Create your models here.
 
@@ -35,6 +36,10 @@ class Report(models.Model):
     
     def get_day(self):
         return self.day.strftime('%Y/%m/%d')
+    
+    def get_absolute_url(self):
+        return reverse("reports:update-view", kwargs={"production_line": self.production_line, 'pk': self.pk,})
+    
     
     def __str__(self):
         return "{}-{}-{}".format(self.start_hour, self.end_hour, self.production_line)
