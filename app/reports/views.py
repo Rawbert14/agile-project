@@ -1,10 +1,26 @@
+from typing import Any
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import ReportForm, ProblemReportedForm
+from .forms import ReportForm, ProblemReportedForm, ReportSelectLineForm
 from .models import Report
 from areas.models import ProductionLine
 from django.contrib.auth.decorators import login_required
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, FormView
 # Create your views here.
+
+class HomeView(FormView):
+    template_name = "reports/home.html"
+    form_class = ReportSelectLineForm
+    
+    def get_form_kwargs(self):
+        kwargs = super(HomeView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+    
+    def post(self, *args, **kwargs):
+        prod_line = self.request.POST.get('prod_line')
+        return redirect('reports:report-view', production_line=prod_line)
+        
+    
 
 
 class ReportUpdateView(UpdateView):
@@ -33,10 +49,6 @@ def report_view(request, production_line):
     #print(queryset)
     line = get_object_or_404(ProductionLine, name = production_line)
     
-    
-
-        
-       
     if 'submitbtn1'in request.POST:
         
         r_id = request.POST.get("report_id")
