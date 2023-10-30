@@ -7,8 +7,13 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
     
     <!-- Custom css -->
+    <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}"
+
+
    <!--  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}"> -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -19,17 +24,19 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <title>Project Name | {% block title %} {% endblock title %}</title>
+    <title>Agile Teams | {% block title %} {% endblock title %}</title>
 </head>
 
 <body>
-  
+   {% include 'navbar.html' %}
     <section class="bg-dark">
-        <div class="">
+        <div class="pt-big">
         {% block content %}
         {% endblock content %}
         </div>
     </section>
+
+    {% include "footer.html" %}
     
     <!-- Within these blocks, you will write HTML code for every file that will extend base.html -->
     

@@ -1,11 +1,50 @@
 from typing import Any
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import ReportForm, ProblemReportedForm, ReportSelectLineForm
-from .models import Report
+from .forms import ReportForm, ProblemReportedForm, ReportSelectLineForm, ReportResultForm
+from .models import Report, ProblemReported
 from areas.models import ProductionLine
 from django.contrib.auth.decorators import login_required
 from django.views.generic import UpdateView, FormView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
+
+
+@login_required
+def main_report_summary(request):
+    try:
+        day = request.session.get('day', None)
+        prod_id = request.session.get('production_line', None)
+        #print(day)
+
+        production_line = ProductionLine.objects.get(id=prod_id)
+        execution = Report.objects.get_by_line_and_day(day, prod_id).aggregate_execution()['execution__sum']
+        plan = Report.objects.get_by_line_and_day(day, prod_id).aggregate_plan()['plan__sum']   
+        problems = ProblemReported.objects.get_problems_by_day_and_line(day, production_line)
+        #execution_agg = Report.objects.aggregate_execution()['execution__sum']
+        #print(execution_agg)
+        
+        
+    except:
+        return redirect('reports:select-view')
+    context = {
+        'execution': execution,
+        'plan': plan,
+        'problems_reported': problems,
+        'day': day,
+        'line': production_line,
+        
+    }
+    
+    del request.session['day']
+    del request.session['production_line']
+    
+    
+    return render(request, 'reports/summary.html', context)
+
+    
+
+
 
 class HomeView(FormView):
     template_name = "reports/home.html"
@@ -20,10 +59,24 @@ class HomeView(FormView):
         prod_line = self.request.POST.get('prod_line')
         return redirect('reports:report-view', production_line=prod_line)
         
+        
+class SelectView(LoginRequiredMixin, FormView):
+    template_name = 'reports/select.html'
+    form_class = ReportResultForm
+    success_url = reverse_lazy('reports:summary-view')
+    
+    def form_valid(self, form):
+        self.request.session['day'] = self.request.POST.get('day', None)
+        self.request.session['production_line'] = self.request.POST.get('production_line', None)
+
+        #print(self.request.session['day'])
+        return super(SelectView, self).form_valid(form)
+        
+    
     
 
 
-class ReportUpdateView(UpdateView):
+class ReportUpdateView(LoginRequiredMixin, UpdateView):
     model = Report
     form_class = ReportForm
     template_name = 'reports/update.html'

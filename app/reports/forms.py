@@ -38,3 +38,11 @@ class ProblemReportedForm(forms.ModelForm):
         exclude = ('user', 'report', 'problem_id',)
         
         
+class ReportResultForm(forms.Form):
+    production_line = forms.ModelChoiceField(queryset=ProductionLine.objects.all())
+    day = forms.CharField(widget=forms.DateTimeInput(attrs= {'class': 'datepicker'}))
+    
+    
+    
+        
+        

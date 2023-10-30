@@ -5,12 +5,12 @@
 
 
 {% block content %} 
-<div class ="col-6 mx-auto m-5">
+<div class ="col-6 mx-auto m-10" style="margin-top: 70px;">
     <div class = "text-center text-white h1"> Welcome to agile team management. </div>
 
 
 {% if request.user.is_authenticated  %}
-<div class = "text-center text-white h5 mb-5"> Choose a project to begin </div>
+<div class = "text-center text-white h5 mb-5" style="margin-top: 70px;"> Choose a project to begin </div>
 <form action="" method="POST">
     {% csrf_token %}
 

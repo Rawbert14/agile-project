@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load stats %}
+{% load substract %}
+
+
+
+{% load crispy_forms_tags %}
+{% block title %} summary {% endblock title%}
+
+{% block content %} 
+
+<div class = "container bg-white py-2 rounded" style="margin-top: 70px;">
+<div class="col-12">
+    <div class="text-muted h2">  
+        <i class="fa-solid fa-chart-line mr-3"></i> Results
+    </div>
+</div>
+
+<div class="col">
+Summary of: <strong> {{day}} - {{line}} </strong>
+</div>
+<br>
+
+<table class="table table-sm text-center">
+    <thead>
+        <tr>
+            <th scope="col">Plan</th>
+            <th scope="col">Execution</th>
+            <th scope="col">Difference</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>
+                {{plan}}
+            </td>
+
+            <td>
+                {{execution}}
+            </td>
+
+            <td>
+                {{execution|substract:plan}}
+            </td>
+            <td>
+                {{execution|stats:plan}}
+            </td>
+        </tr>
+    </tbody>
+
+
+</table>
+
+<br>
+<h3>Problems</h3>
+<hr>
+{% for problem in problems_reported %}
+<hr><small class="text-muted">{{problem.problem_id}}</small><br>
+{{problem.category}}<br>
+{{problem.description}}<br>
+{{problem.breakdown}} minutes <br>
+{% endfor %}
+</hr>
+
+</div>
+
+
+{% endblock content %}
