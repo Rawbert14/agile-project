@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from profiles.models import Profile
 from reports.models import Report, ProblemReported
 from django.core.validators import FileExtensionValidator
@@ -28,6 +29,9 @@ class ProblemPost(Post):
     
     def __str__(self):
         return "{}".format(self.problem_reported.description)[:50]
+    
+    def get_absolute_url(self):
+        return reverse("posts:pp-detail", kwargs={"pk1": self.pk, 'pk': self.problem_reported.id})
         
 
 def get_upload_path(instance, filename):

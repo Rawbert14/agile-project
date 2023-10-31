@@ -15,14 +15,17 @@
     <br>
 
     {% for obj in object_list %}
+    
         <div class="{% if obj.problem_reported %}border-danger{% else %}border-primary{% endif %} card card-body mt-3">
             {% if obj.problem_reported %}
+            
                 <small class='text-muted'> author:{{obj.problem_reported.user}} | {{obj.problem_reported.created|timesince}} ago </small>
                 <hr>
                 <h5 class= 'card-title'> {{obj.problem_reported.category}}</h5>
                 <p class='card-text'> {{obj.problem_reported.description}}</p>
             {% else %}
                 {% if obj.image %}
+                
                     <div class='mb-3'><img class='w-100' src='{{obj.image.url}}'></div>
                 {% endif %}
                 <small class='text-muted'> author:{{obj.author}} | {{obj.created|timesince}} ago </small>

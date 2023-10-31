@@ -7,9 +7,10 @@ from django.urls import reverse_lazy
 from .models import ProblemPost, GeneralPost
 from profiles.models import Profile
 from posts.models import Post, Like
+from .mixins import FormUserRequiredMixin
 # Create your views here.
 
-class PostCreateView(CreateView):
+class PostCreateView(FormUserRequiredMixin, CreateView):
     form_class = PostForm
     template_name = 'posts/board.html'
     success_url = reverse_lazy('posts:post-list')
