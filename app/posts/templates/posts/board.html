@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} board {% endblock title%}
+
+{% block content %} 
+<div class="col-6 mx-auto" style="margin-top: 70px;">
+
+<form action="" methods="POST">
+{% csrf_token %}
+{{form|crispy}}
+<button type="submit" class="btn btn-primary">Send</button>
+</form>
+</div>
+<br>
+
+{% for obj in object_list %}
+
+<div class="col-6 mx-auto card">
+{{obj.author}}
+</div>
+
+{% endfor %}
+
+{% endblock content %}

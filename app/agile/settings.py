@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "areas",
     "products",
     "categories",
+    "posts",
 ]
 
 MIDDLEWARE = [
