@@ -45,3 +45,20 @@ class GeneralPost(Post):
     def __str__(self):
         return str(self.title)
 
+LIKE_CHOICES=(
+    ('Like', 'Like'),
+    ('Unlike', 'Unlike'),
+)
+
+
+class Like(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    value = models.CharField(choices=LIKE_CHOICES, default='Like', max_length=10)
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return str(self.post)
+    
+    

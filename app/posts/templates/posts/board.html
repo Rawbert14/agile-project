@@ -1,24 +1,64 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+
 {% block title %} board {% endblock title%}
 
 {% block content %} 
-<div class="col-6 mx-auto" style="margin-top: 70px;">
+<div class="col-8 mx-auto" style="margin-top: 70px;">
+    <div class ='container bg-white pt-2 pb-4 rounded'>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+    <br>
 
-<form action="" methods="POST">
-{% csrf_token %}
-{{form|crispy}}
-<button type="submit" class="btn btn-primary">Send</button>
-</form>
+    {% for obj in object_list %}
+        <div class="{% if obj.problem_reported %}border-danger{% else %}border-primary{% endif %} card card-body mt-3">
+            {% if obj.problem_reported %}
+                <small class='text-muted'> author:{{obj.problem_reported.user}} | {{obj.problem_reported.created|timesince}} ago </small>
+                <hr>
+                <h5 class= 'card-title'> {{obj.problem_reported.category}}</h5>
+                <p class='card-text'> {{obj.problem_reported.description}}</p>
+            {% else %}
+                {% if obj.image %}
+                    <div class='mb-3'><img class='w-100' src='{{obj.image.url}}'></div>
+                {% endif %}
+                <small class='text-muted'> author:{{obj.author}} | {{obj.created|timesince}} ago </small>
+                <hr>
+                <h5 class='card-title'> {{obj.title}}</h5>
+                <p class='card-text'> {{obj.description}}</p>
+            {% endif %}
+            
+            <form action="{% url "posts:post-like" %}" method='POST'>
+                {% csrf_token %}
+                <input type='hidden' name='post_id' value='{{obj.id}}'>
+                <div class='row'>
+                    <div class='col-4'>
+                        <button class='btn btn-link' type='submit' style="text-decoration:none"> 
+                        {% if profile not in obj.liked.all%}  
+                             
+                                <i class="fa-solid fa-heart"></i> 
+                                <span class='ml-2'>Like</span>
+                            
+                        {% else %}
+                             
+                                <i class="fa-solid fa-heart-crack"></i>
+                                <span class='ml-2'>Unlike</span>
+                            
+                        {% endif %}
+                        </button>
+                        <span class="text-black"> {{obj.liked.all.count}} likes </span>
+                    </div>
+                    <div class='col-4'>
+                        <a href='' class='btn btn-primary'> 
+                            <span class='ml-2'><i class="fa-solid fa-magnifying-glass-plus mr-2"></i>Details </span>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endfor %}
 </div>
-<br>
-
-{% for obj in object_list %}
-
-<div class="col-6 mx-auto card">
-{{obj.author}}
-</div>
-
-{% endfor %}
-
 {% endblock content %}
