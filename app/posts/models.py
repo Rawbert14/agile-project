@@ -48,6 +48,12 @@ class GeneralPost(Post):
     
     def __str__(self):
         return str(self.title)
+    
+    def get_absolute_url(self):
+        return reverse("posts:gp-detail", kwargs={"pk": self.pk})
+    
+    
+    
 
 LIKE_CHOICES=(
     ('Like', 'Like'),
@@ -65,4 +71,16 @@ class Like(models.Model):
     def __str__(self):
         return str(self.post)
     
+
+class Comment(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    post = models.ForeignKey(GeneralPost, on_delete=models.CASCADE)
+    body = models.TextField(max_length=300)
+    created = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return "{}".format(self.pk)
+    
+    class Meta:
+        ordering = ('-created', )
     
