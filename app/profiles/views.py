@@ -1,20 +1,29 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Profile
+from .forms import ProfileModelForm
 # Create your views here.
-def test_view(request):
-    hw = "Hello world"
-    return HttpResponse(hw)
 
-
-def test_view_2(request):
-    if request.user.is_authenticated:
-        user = request.user
-        profile = Profile.objects.get(user=user)
-    else:
-        profile='no user'
+def profile_view(request):
+    try: 
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None
+    
+    form = ProfileModelForm(request.POST or None, request.FILES or None, instance=profile)
+    
+    if request.method == 'POST':
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.bio = form.cleaned_data.get('bio')
+            instance.team = form.cleaned_data.get('team')
+            instance.profile_picture = form.cleaned_data.get('profile_picture')
+            form.save()
+            
     context = {
-        'user': profile
+        'object': profile,
+        'form': form
     }
-    return render(request, 'profiles/test.html', context)
+    
+    return render(request, 'profiles/profile.html', context)
         
