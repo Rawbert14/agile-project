@@ -32,6 +32,20 @@
                     </a>
 
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_logout' %}">
+                        Sign out <i class="fas fa-power-off mt-2"></i> 
+                    </a>
+                </li>
+                {% else %}
+                  <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_login' %}">
+                            Sign in <i class="fa fa-sign-in-alt"></i> 
+                        </a>
+                    </li>
+
+
                 {% endif %}
             </ul>
 
