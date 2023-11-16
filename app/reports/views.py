@@ -10,7 +10,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 
-@login_required
 def main_report_summary(request):
     try:
         day = request.session.get('day', None)
@@ -87,14 +86,14 @@ class ReportUpdateView(LoginRequiredMixin, UpdateView):
     
 
 
-@login_required
+
 def delete_view(request, *args, **kwargs):
     r_id = kwargs.get("pk")
     obj = Report.objects.get(id=r_id)
     obj.delete()
     return redirect(request.META.get('HTTP_REFERER')) #redirect to current path/view
 
-@login_required
+
 def report_view(request, production_line):
     form = ReportForm(request.POST or None, production_line=production_line)
     pform = ProblemReportedForm(request.POST or None)

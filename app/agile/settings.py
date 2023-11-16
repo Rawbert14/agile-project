@@ -56,6 +56,18 @@ INSTALLED_APPS = [
     "posts",
 ]
 
+# Set the email backend to SMTP
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# SMTP configuration for Gmail
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # Port for TLS
+EMAIL_USE_TLS = True  # Enable TLS (Transport Layer Security)
+EMAIL_HOST_USER = 'andercorobert@gmail.com'  # Your Gmail address
+EMAIL_HOST_PASSWORD = 'bauf tnfu ucmw vwqb'  # Your Gmail password or app-specific password
+
+ALLOWED_HOSTS = ['test.com','localhost', '127.0.0.1']
+
 SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
@@ -68,8 +80,9 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'agile.forms.CustomSignupForm'
 
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+DEBUG = True
+
+SITE_DOMAIN = 'agilemanagement.com'
 
 
 MIDDLEWARE = [
