@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "categories",
     "posts",
     "blogs",
+    "todo",
 ]
 
 # Set the email backend to SMTP
