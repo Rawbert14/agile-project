@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views
+from blogs import views as BlogsView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -25,6 +27,9 @@ urlpatterns = [
     path('', include('reports.urls', namespace='reports')),
     path('posts/', include('posts.urls', namespace='posts')),
     path('accounts/', include('allauth.urls')),
+    path('learning/', views.home, name='home'),
+    path('<slug:slug>/', BlogsView.blogs, name='blogs'),
+    path('category/<int:category_id>/', BlogsView.posts_by_category, name='posts_by_category'),
 ]
 
 urlpatterns += static(

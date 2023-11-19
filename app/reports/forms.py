@@ -11,7 +11,8 @@ class ReportSelectLineForm(forms.Form):
         self.user = user
         #print(user)
         super(ReportSelectLineForm, self).__init__(*args, **kwargs)
-        self.fields['production_line'].queryset = ProductionLine.objects.filter(team_leader__user__username = user)
+        #self.fields['production_line'].queryset = ProductionLine.objects.filter(team_leader__user__username = user)
+        self.fields['production_line'].queryset = ProductionLine.objects.all()
 
 
 class ReportForm(forms.ModelForm):

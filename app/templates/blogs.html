@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!-- Page content-->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Blog content-->
+            <article class="bg-white p-4 rounded">
+                <!-- Blog header-->
+                <header class="mb-4">
+                    <!-- Blog title-->
+                    <h1 class="fw-bolder mb-1">{{ single_blog.title }}</h1>
+                    <!-- Blog meta content-->
+                    <div class="text-muted fst-italic mb-2">Posted on {{ single_blog.created_at }} by {{ single_blog.author }}</div>
+                    <!-- Blog category-->
+                    <a class="badge bg-warning text-decoration-none text-light" href="#!">{{ single_blog.category }}</a>
+                </header>
+                <!-- Blog content-->
+                <section class="mb-5">
+                    <p class="fs-5 mb-4">{{ single_blog.short_description }}</p>
+                    <p class="fs-5 mb-4">{{ single_blog.blog_body }}</p>
+                    <br>
+                </section>
+            </article>
+        </div>
+        <div class="col-lg-4">
+            <!-- Details widget-->
+            <div class="card mb-4 p-3">
+                <h4 class="font-italic">Details</h4>
+                <div class="card-body">
+                    {% if object.report %}
+                        <!-- ... (your details logic) ... -->
+                        <!-- Adjust and place your table and details here -->
+                    {% else %}
+                        <!-- If no report -->
+                        {% if object.image %}
+                            <div class="mb-3"><img class="w-100" src="{{object.image.url}}"></div>
+                        {% endif %}
+                        <h5>{{object.title}}</h5>
+                        <p>{{object.description}}</p>
+                    {% endif %}
+                    <!-- Button and form section -->
+                    <div class="row">
+                        <div class="col-6 my-3">
+                            <a href="{% url 'home' %}">
+                                <button class="btn btn-warning">
+                                    <i class="fas fa-arrow-left mr-2"></i> Back to board
+                                </button>
+                            </a>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

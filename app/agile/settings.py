@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "products",
     "categories",
     "posts",
+    "blogs",
 ]
 
 # Set the email backend to SMTP
@@ -114,6 +115,7 @@ TEMPLATES = [
                 
                 'profiles.context_processors.profile_pic',
                 'profiles.context_processors.get_profile',
+                'blogs.context_processors.get_categories',
             ],
         },
     },
@@ -187,6 +189,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 #STATICFILES_DIRS = [BASE_DIR / "static_project"]
+
+STATIC_ROOT = BASE_DIR/'static_project'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static_project")
 ]
@@ -194,4 +199,5 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")
 
 MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
+#MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
+MEDIA_ROOT = BASE_DIR /'media'
