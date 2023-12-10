@@ -6,10 +6,10 @@
 
         <!-- Featured Posts -->
         <h3 class="text-uppercase text-warning" style="letter-spacing: 2px;">Category - {{ category }}</h3>
-        <div class="row mb-2">
+        <div class="row mb-4">
             {% if posts %}
                 {% for blog_post in posts %}
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-4">
                         <div class="card border-0">
                             <div class="card-body">
                                 <h3><a href="{% url 'blogs' blog_post.slug %}" class="text-dark">{{ blog_post.title }}</a></h3>
@@ -17,15 +17,15 @@
                                 <p class="card-text">{{ blog_post.short_description | truncatewords:25 }}</p>
                             </div>
                         </div>
-                        <div class="col-6 my-3">
-                            <a href="{% url 'home' %}">
-                                <button class="btn btn-warning">
-                                    <i class="fas fa-arrow-left mr-2"></i> Back to blogs
-                                </button>
-                            </a>
-                        </div>
                     </div>
                 {% endfor %}
+                <div class="col-12">
+                    <a href="{% url 'home' %}">
+                        <button class="btn btn-warning">
+                            <i class="fas fa-arrow-left mr-2"></i> Back to blogs
+                        </button>
+                    </a>
+                </div>
             {% else %}
                 <div class="col">
                     <p>No posts found</p>

@@ -59,7 +59,7 @@ class HomeView(FormView):
         return redirect('reports:report-view', production_line=prod_line)
         
         
-class SelectView(LoginRequiredMixin, FormView):
+class SelectView(FormView):
     template_name = 'reports/select.html'
     form_class = ReportResultForm
     success_url = reverse_lazy('reports:summary-view')

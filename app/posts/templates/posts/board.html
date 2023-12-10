@@ -4,6 +4,9 @@
 {% block title %} board {% endblock title%}
 
 {% block content %} 
+
+{% if request.user.is_authenticated  %}
+
 <div class="col-8 mx-auto" style="margin-top: 70px;">
     <div class ='container bg-white pt-2 pb-4 rounded'>
         <form action="" method="POST" enctype="multipart/form-data">
@@ -63,5 +66,10 @@
             </form>
         </div>
     {% endfor %}
+
+    {% else %}
+<div class = "text-white text-center h3" style="margin-top: 70px;"> Please log in! </div>
+{% endif %}
+
 </div>
 {% endblock content %}

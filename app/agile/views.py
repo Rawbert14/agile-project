@@ -23,3 +23,6 @@ def todo(request):
         'completed_tasks': completed_tasks
     }
     return render(request, 'todo.html', context)
+
+def help(request):
+    return render(request, 'help.html')
