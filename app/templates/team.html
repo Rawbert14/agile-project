@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="margin-top: 70px;">
+    <div class="row">
+        {% for member in members %}
+        <div class="col-md-4 mb-4">
+            <div class="card border-0">
+                <div class="card-body">
+                    <h2>{{ member.user.username }}</h2>
+                    <p>Email: {{ member.user.email }}</p>
+                    <p>Bio: {{ member.bio }}</p>
+                    <p>Team: {{ member.team }}</p>
+                    <p>Joined: {{ member.created }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

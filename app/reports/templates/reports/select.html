@@ -17,14 +17,18 @@ $(document).ready(function(){
 {% if request.user.is_authenticated  %}
 
 <div class="col-6 mx-auto" style="margin-top: 75px;">
-    <div class="text-white text-center h3 m-5">Do your choices</div>
+    <div class="bg-white p-4 rounded">
+    <div class="text-black text-center h3 m-5">Do your choices</div>
     <form action="" method="POST">
         {% csrf_token %}
         {{ form|crispy }}
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+</div>
 
+<div class="col-6 mx-auto" style="margin-top: 75px;">
+</div>
 {% else %}
 <div class = "text-white text-center h3" style="margin-top: 70px;"> Please log in! </div>
 {% endif %}

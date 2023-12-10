@@ -25,6 +25,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('todo/', views.todo, name='todo'),
     path('help/', views.help, name='help'),
+    path('team/', views.team, name='team'),
     path("profile/", include('profiles.urls', namespace='profiles')),
     path('', include('reports.urls', namespace='reports')),
     path('posts/', include('posts.urls', namespace='posts')),
@@ -32,8 +33,7 @@ urlpatterns = [
     path('learning/', views.home, name='home'),
     path('<slug:slug>/', BlogsView.blogs, name='blogs'),
     path('category/<int:category_id>/', BlogsView.posts_by_category, name='posts_by_category'),
-    path('todos/', include('todo.urls')),
-    
+    path('todos/', include('todo.urls')),    
     
 ]
 

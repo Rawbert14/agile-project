@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 from blogs.models import Category, Blog
 from todo.models import Task
+from profiles.models import Profile
 
 
 def home(request):
@@ -26,3 +27,10 @@ def todo(request):
 
 def help(request):
     return render(request, 'help.html')
+
+def team(request):
+    members = Profile.objects.all()
+    context = {
+        'members': members,
+    }
+    return render(request, 'team.html', context)
