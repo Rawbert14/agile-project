@@ -34,3 +34,6 @@ def team(request):
         'members': members,
     }
     return render(request, 'team.html', context)
+
+def social(request):
+    return render(request, 'social.html')
