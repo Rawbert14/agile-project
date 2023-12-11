@@ -57,15 +57,19 @@
         <thead class="thead-light">
             <tr class="text-center">
                 <th scope="col">Day</th>
+                <th scope="col">User</th>
                 <th scope="col">Start</th>
                 <th scope="col">End</th>
-                <th scope="col">Product</th>
-                <th scope="col">Plan</th>
-                <th scope="col">Day</th>
-                <th scope="col">Execution</th>
+                <th scope="col">Sprint</th>
+                <th scope="col">Expected</th>
+                <th scope="col">Actual</th>
+                <th scope="col">Project</th>
                 <th scope="col">Problems</th>
                 <th scope="col">Edit</th>
+                
                 <th scope="col">Delete</th>
+                
+
             </tr>
         </thead>
 
@@ -73,6 +77,7 @@
         {% for obj in object_list %}
             <tr class="text-center">
                 <td>{{obj.get_day}}</td>
+                <td>{{obj.user}}</td>
                 <td>{{obj.start_hour}}</td>
                 <td>{{obj.end_hour}}</td>
                 <td>{{obj.product}}</td>
@@ -88,9 +93,13 @@
                     <a href="{{obj.get_absolute_url}}"><button class="btn btn-info"><i class="fa-solid fa-gear"></i></button></a>
                 </td>
 
+                {% if obj.user == request.user %}
+
                 <td class="fit">
                     <a href="{% url "reports:delete-view" pk=obj.id %}"><button class="btn btn-danger"><i class="fa-solid fa-trash-can-arrow-up"></i></button></a>
                 </td>
+                {% endif %}
+                
 
             </tr>
         {% endfor %}

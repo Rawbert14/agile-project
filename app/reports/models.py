@@ -94,7 +94,7 @@ class ProblemReported(models.Model):
     description = models.TextField()
     problem_id = models.CharField(max_length=12, unique=True, blank=True, default=random_code)
     breakdown = models.PositiveIntegerField()
-    public = models.BooleanField(default=False)
+    public = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
     updated = models.DateTimeField(auto_now=True)
