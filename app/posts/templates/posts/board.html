@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} board {% endblock title%}
+{% block title %} board {% endblock title %}
 
 {% block content %} 
 
@@ -9,6 +9,9 @@
 
 <div class="col-8 mx-auto" style="margin-top: 70px;">
     <div class ='container bg-white pt-2 pb-4 rounded'>
+
+        <h3 class="text-center mb-4">Create a Post/Issue and Help Others by Commenting and Liking Posts!</h3>
+
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{form|crispy}}
@@ -18,17 +21,14 @@
     <br>
 
     {% for obj in object_list %}
-    
         <div class="{% if obj.problem_reported %}border-danger{% else %}border-primary{% endif %} card card-body mt-3" style="border-width: 4px;">
             {% if obj.problem_reported %}
-            
                 <small class='text-muted'> author:{{obj.problem_reported.user}} | {{obj.problem_reported.created|timesince}} ago </small>
                 <hr>
                 <h5 class= 'card-title'> {{obj.problem_reported.category}}</h5>
                 <p class='card-text'> {{obj.problem_reported.description}}</p>
             {% else %}
                 {% if obj.image %}
-                
                     <div class='mb-3'><img class='w-50' src='{{obj.image.url}}'></div>
                 {% endif %}
                 <small class='text-muted'> author:{{obj.author}} | {{obj.created|timesince}} ago </small>
@@ -44,15 +44,11 @@
                     <div class='col-4'>
                         <button class='btn btn-link' type='submit' style="text-decoration:none"> 
                         {% if profile not in obj.liked.all%}  
-                             
                                 <i class="fa-solid fa-heart"></i> 
                                 <span class='ml-2'>Like</span>
-                            
                         {% else %}
-                             
                                 <i class="fa-solid fa-heart-crack"></i>
                                 <span class='ml-2'>Unlike</span>
-                            
                         {% endif %}
                         </button>
                         <span class="text-black"> {{obj.liked.all.count}} likes </span>
@@ -67,9 +63,10 @@
         </div>
     {% endfor %}
 
-    {% else %}
-<div class = "text-white text-center h3" style="margin-top: 70px;"> Please log in! </div>
+{% else %}
+    <div class = "text-white text-center h3" style="margin-top: 70px;"> Please log in! </div>
 {% endif %}
+<div class ="col-6 mx-auto m-10" style="margin-top: 70px;"> </div>
 
 </div>
 {% endblock content %}

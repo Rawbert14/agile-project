@@ -10,7 +10,7 @@
 
 
 {% if request.user.is_authenticated  %}
-<div class = "text-center text-white h5 mb-5" style="margin-top: 70px;"> Choose a project to begin </div>
+<div class = "text-center text-white h5 mb-5" style="margin-top: 70px;"> Choose a project to begin! Log work time and create related issues! </div>
 <form action="" method="POST">
     {% csrf_token %}
 
@@ -24,6 +24,7 @@
 {% else %}
 <div class = "text-white text-center h3"> Please log in! </div>
 {% endif %}
+<div class ="col-6 mx-auto m-10" style="margin-top: 70px;"> </div>
 </div>
 
 <script>
