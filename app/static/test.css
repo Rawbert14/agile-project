@@ -2,15 +2,23 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #ae6925;
+    background-color: orange;
     margin: 0;
     padding: 0;
 }
 
+.blue-background {
+    background-color: blue;
+    padding: 20px;
+    color: white; 
+}
 
+.navbar-nav .nav-link {
+    color: black !important;
+}
 
 .card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px #f5f3f3;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 

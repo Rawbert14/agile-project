@@ -6,13 +6,16 @@
 {% block content %}
 
 <div class="col-9 mx-auto" style="margin-top: 70px;">
-<div class="card p-4">
+<div class="jumbotron" p-4">
 
 <div class="h4">Edit Profile</div>
 
-    <div class="img-thumbnail mx-auto">
-        <img src="{{object.profile_picture.url}}" width="200" height="200">  
-    </div>
+<figure class="img-thumbnail mx-auto text-center">
+  <img src="{{object.profile_picture.url}}" width="200" height="200" alt="Profile Picture">  
+  <figcaption>Your Profile Picture</figcaption>
+</figure>
+
+
     <div><span class="font-weight-bold">Username: </span>{{object.user.username}}</div>
     <div><span class="font-weight-bold">Email:  </span> {{object.user.email}}</div>
     <div><span class="font-weight-bold">Bio: </span> {{object.bio}} </div>

@@ -1,4 +1,23 @@
-<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary fixed-top py-3">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+       
+        .navbar-nav .nav-link {
+            color: black !important;
+        }
+        .navbar-brand {
+            color: black !important;
+        }
+    </style>
+    <title>Your Page Title</title>
+</head>
+<body>
+
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-warning border-bottom border-secondary fixed-top py-3">
     <div class="container">
         <a class="navbar-brand" href="{% url 'help' %}">Agile Teams</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,37 +47,34 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'help' %}">AppHelp Page</a>
                 </li>
-                
-      
             </ul>
 
             <ul class='navbar-nav'>
                 {% if request.user.is_authenticated %}
-                <li class='nav-item'>
-                    <a class='nav-link' href='{% url "profiles:profile-view" %}'>
-                        <img src='{{picture.url}}' class='img-avatar' alt='profile picture'>
-                        <span class='ml-2'> {{request.user}} </span>
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account_logout' %}">
-                        Sign out <i class="fas fa-power-off mt-2"></i> 
-                    </a>
-                </li>
-                {% else %}
-                  <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_login' %}">
-                            Sign in <i class="fa fa-sign-in-alt"></i> 
+                    <li class='nav-item'>
+                        <a class='nav-link' href='{% url "profiles:profile-view" %}'>
+                            <img src='{{picture.url}}' class='img-avatar' alt='profile picture'>
+                            <span class='ml-2'> {{request.user}} </span>
                         </a>
                     </li>
-
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_logout' %}">
+                            Sign out <i class="fas fa-power-off mt-2"></i>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_login' %}">
+                            Sign in <i class="fa fa-sign-in-alt"></i>
+                        </a>
+                    </li>
                 {% endif %}
             </ul>
-
         </div>
     </div>
 </nav>
+
+
+
+</body>
+</html>
