@@ -8,7 +8,19 @@
 {% if request.user.is_authenticated  %}
 
 <div class="col-8 mx-auto" style="margin-top: 70px;">
-    <div class ='container bg-white pt-2 pb-4 rounded'>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <p> Presented below is the question board area, featuring two distinct types of posts. The red posts serve as a repository for problems logged on the project tab. These entries showcase the problem, its creator, timestamp, and the impact it had on the individual. Importantly, these posts are highlighted in red and are intended for managerial attention. While these red posts do not allow comments or likes, they serve as a visual indicator of critical issues within the project.</p>
+                <p> On the other hand, the blue posts provide a space for collaborative interaction. Here, users can seek help or communicate with others by adding a title, description, and even attaching relevant images. Members are encouraged to like and comment on these posts, fostering a supportive environment where team members can assist one another.</p>
+                <p> Feel free to utilize this platform to address and resolve issues efficiently while also promoting teamwork and knowledge-sharing. If you have any questions or require further guidance on using the question board, please don't hesitate to reach out at 2549168a@student.gla.ac.uk We are here to facilitate effective communication and collaboration within the team.</p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class ='container bg-white pt-2 pb-4 rounded' style='margin-top: 30px;'>
 
         <h3 class="text-center mb-4">Create a Post and Help Others by Commenting and Liking Posts/Issues!</h3>
         <h5 class="text-center mb-4">Issues are red and can be only seen and likes, not deleted or commented. Please create a post for a question that you wish to get an answer for!</h5>
