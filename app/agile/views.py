@@ -15,12 +15,15 @@ def home(request):
     }
     return render(request, 'home.html', context)
 
+
 def todo(request):
-    tasks = Task.objects.filter(is_completed=False).order_by('-updated_at')
-    #print(tasks)
-    completed_tasks = Task.objects.filter(is_completed=True).order_by('-updated_at')
+    tasks = Task.objects.filter(status=Task.TODO).order_by('-updated_at')
+    in_progress_tasks = Task.objects.filter(status=Task.IN_PROGRESS).order_by('-updated_at')
+    completed_tasks = Task.objects.filter(status=Task.DONE).order_by('-updated_at')
+
     context = {
         'tasks': tasks,
+        'in_progress_tasks': in_progress_tasks,
         'completed_tasks': completed_tasks
     }
     return render(request, 'todo.html', context)

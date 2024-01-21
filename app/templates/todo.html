@@ -3,87 +3,94 @@
 {% block content %}
 {% if request.user.is_authenticated  %}
 
-
-<div class ="col-6 mx-auto m-10" style="margin-top: 70px;"> </div>
-
 <div class="container">
-    <div class="card">
+    <div class="card" style="margin-top: 70px;">
         <div class="card-body">
-<p> Presented below is a team-oriented ToDo list, designed with a unique approach that distinguishes it from individual task lists. This collaborative tool is intended for use by the entire team, featuring tasks that are not specifically assigned to any individual and can be collectively addressed by team members. </p>
-<p> On the left side, you'll find tasks yet to be assigned, allowing team members to mark them as done, edit, or delete them as needed. Completed tasks are dynamically moved to the right side, offering the flexibility to be shifted back to the to-do list or removed entirely.</p>
-<p> In the lower section, there's an 'add task' area where team members are encouraged to contribute notable tasks that may not be currently listed in the sprint backlog.</p>
-<p> Furthermore, we are actively working on a new feature – an 'in progress list.' This enhancement aims to prevent individuals from concurrently working on two tasks, promoting a more streamlined and efficient workflow within the team.</p>
-<p> Feel free to explore this collaborative platform, and if you have any questions, suggestions, or need assistance, please don't hesitate to reach out at 2549168a@student.gla.ac.uk Your input is valuable as we continually strive to improve and tailor our tools to meet the needs of the entire team. </p>
+            <!-- Introductory text -->
+            <p>Presented below is a team-oriented ToDo list, designed with a unique approach that distinguishes it from individual task lists. This collaborative tool is intended for use by the entire team, featuring tasks that are not specifically assigned to any individual and can be collectively addressed by team members.</p>
+            <p>In the lower section, there's an 'add task' area where team members are encouraged to contribute notable tasks that may not be currently listed in the sprint backlog.</p>
+            <p>Feel free to explore this collaborative platform, and if you have any questions, suggestions, or need assistance, please don't hesitate to reach out.</p>
         </div>
     </div>
-</div>
 
-
-<div class ="col-6 mx-auto m-10" style="margin-top: 30px;"> </div>
-
-
-    <div class="container">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="pt-5 text-center">ToDo Section</h3>
-                <div class="row">
-                    <div class="col-md-7 col-lg-7">
-                        <h4>Tasks to be done</h4>
-                        <p class="text-muted">{% now "jS F Y" %}</p>
-                        <div class="overflow-auto" style="max-height: 450px;">
-                            <!-- List of all the tasks for the day -->
-                            {% for task in tasks %}
-                            <div class="card mb-1">
-                                <div class="card-body">
-                                    {{task.task}} 
-                                    <span class="float-right">
-                                        <a href="{% url 'mark_as_done' task.pk %}" class="btn btn-success"><i class="fa fa-check"></i> Mark as Done</a>
-                                        <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                        <a href="{% url 'edit_task' task.pk %}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                                    </span>
-                                </div>
-                            </div>
-                            {% endfor %}
-                            <!-- Add more tasks here -->
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-lg-5">
-                        <h5>Completed Tasks</h5>
-                        <!-- List of all the tasks that have completed -->
-                        {% for task in completed_tasks %}
+    <div class="card mt-4">
+        <div class="card-body">
+            <h3 class="text-center">ToDo Section</h3>
+            <div class="row">
+                <!-- Tasks to be done -->
+                <div class="col-md-4">
+                    <h4>Tasks to be done</h4>
+                    <div class="overflow-auto" style="max-height: 450px;">
+                        {% for task in tasks %}
                         <div class="card mb-1">
                             <div class="card-body">
-                                {{task.task}}
-                                <span style="position: relative; float: right;">
-                                    <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-danger"><i class="fa fa-times"></i> Mark as Undone</a>
+                                {{ task.task }}
+                                <span class="float-right">
+                                    <a href="{% url 'mark_as_in_progress' task.pk %}" class="btn btn-warning"><i class="fa fa-forward"></i> In Progress</a>
+                                    <a href="{% url 'edit_task' task.pk %}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                                     <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                 </span>
                             </div>
                         </div>
                         {% endfor %}
-                        <!-- Add more completed tasks here -->
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 col-lg-6 mx-auto mt-3">
-                        <!-- To Do Form -->
-                        <form action="{% url 'addTask' %}" method='POST'>
-                            {% csrf_token %}
-                            <div class="input-group">
-                                <input type="text" name='task' class="form-control" placeholder="Add a task">
-                                <div class="input-group-append">
-                                    <button type='submit' class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
-                                </div>
+
+                <!-- In Progress Tasks -->
+                <div class="col-md-4">
+                    <h4>In Progress</h4>
+                    <div class="overflow-auto" style="max-height: 450px;">
+                        {% for task in in_progress_tasks %}
+                        <div class="card mb-1">
+                            <div class="card-body">
+                                {{ task.task }}
+                                <span class="float-right">
+                                    <a href="{% url 'mark_as_done_from_in_progress' task.pk %}" class="btn btn-success"><i class="fa fa-check"></i> Done</a>
+                                </span>
                             </div>
-                        </form>
+                        </div>
+                        {% endfor %}
                     </div>
+                </div>
+
+                <!-- Completed Tasks -->
+                <div class="col-md-4">
+                    <h4>Completed Tasks</h4>
+                    <div class="overflow-auto" style="max-height: 450px;">
+                        {% for task in completed_tasks %}
+                        <div class="card mb-1">
+                            <div class="card-body">
+                                {{ task.task }}
+                                <span style="position: relative; float: right;">
+                                    <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-danger"><i class="fa fa-undo"></i> Undo</a>
+                                    <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Task Form -->
+            <div class="row mt-3">
+                <div class="col-md-6 col-lg-6 mx-auto">
+                    <form action="{% url 'addTask' %}" method='POST'>
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" name='task' class="form-control" placeholder="Add a task">
+                            <div class="input-group-append">
+                                <button type='submit' class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    {% else %}
-    <div class = "text-white text-center h3" style="margin-top: 70px;"> Please log in! </div>
-    {% endif %}
-    <div class ="col-6 mx-auto m-10" style="margin-top: 70px;"> </div>
+</div>
 
+{% else %}
+<div class="text-center h3" style="margin-top: 70px;">Please log in to view the ToDo list.</div>
+{% endif %}
 {% endblock %}

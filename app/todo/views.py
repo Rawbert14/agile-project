@@ -1,27 +1,28 @@
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from todo.models import Task
 
-# Create your views here.
 def addTask(request):
     task = request.POST['task']
     Task.objects.create(task=task)
     return redirect('todo')
 
-
 def mark_as_done(request, pk):
     task = get_object_or_404(Task, pk=pk)
-    task.is_completed = True
+    task.status = Task.DONE
     task.save()
     return redirect('todo')
 
+def mark_as_in_progress(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    task.status = Task.IN_PROGRESS
+    task.save()
+    return redirect('todo')
 
 def mark_as_undone(request, pk):
     task = get_object_or_404(Task, pk=pk)
-    task.is_completed = False
+    task.status = Task.TODO
     task.save()
     return redirect('todo')
-
 
 def edit_task(request, pk):
     get_task = get_object_or_404(Task, pk=pk)
@@ -35,10 +36,14 @@ def edit_task(request, pk):
             'get_task': get_task,
         }
         return render(request, 'edit_task.html', context)
-    
-    
+
 def delete_task(request, pk):
     task = get_object_or_404(Task, pk=pk)
     task.delete()
-    return redirect('todo')    
-    
+    return redirect('todo')
+
+def mark_as_done_from_in_progress(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    task.status = Task.DONE
+    task.save()
+    return redirect('todo')
