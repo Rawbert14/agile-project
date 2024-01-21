@@ -5,22 +5,35 @@
 {% block head_title %}{% trans "Sign Out" %}{% endblock %}
 
 {% block content %}
-<div class="col-5 mx-auto" style="margin-top: 70px;">
-<div class="bg-white rounded py-3 px-5">
-<h1>{% trans "Sign Out" %}</h1>
 
-<p>{% trans 'Are you sure you want to sign out?' %}</p>
+<div class="container" style="margin-top: 70px;">
 
-<form method="post" action="{% url 'account_logout' %}">
-  {% csrf_token %}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-  {% endif %}
-  <button type="submit" class="btn btn-primary">{% trans 'Sign Out' %}</button>
-</form>
-
+<div class="card" >
+    <div class="card-body text-center">
+        <h2 class="pt-5 pb-3">Just Making Sure</h2>
+        <p class="pb-4">We understand that logging out is an important step for maintaining your security, especially on shared devices. It's always good to be certain if you wish to end your current session. Your account and personal information remain secure and will be waiting for you upon your return.</p>
+        <p>If you didn't intend to sign out, feel free to navigate back to our other pages and continue exploring.</p>
+    </div>
 </div>
-<div class ="col-6 mx-auto m-10" style="margin-top: 70px;"> </div>
+</div>
+
+<div class="container" style="margin-top: 35px;">
+
+    
+    <div class="card mb-4">
+        <div class="card-body text-center">
+            <h1 class="pt-5">{% trans "Sign Out" %}</h1>
+            <p class="pb-3">{% trans 'Are you sure you want to sign out?' %}</p>
+
+            <form method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <button type="submit" class="btn btn-primary">{% trans 'Sign Out' %}</button>
+            </form>
+        </div>
+    </div>
 
 </div>
 {% endblock %}
