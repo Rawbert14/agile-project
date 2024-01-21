@@ -37,3 +37,6 @@ def team(request):
 
 def social(request):
     return render(request, 'social.html')
+
+def policy(request):
+    return render(request, 'policy.html')

@@ -7,7 +7,7 @@ class CustomSignupForm(forms.Form):
     check = forms.BooleanField(
         required=True,
         label_suffix='',
-        label=mark_safe("<span class='ml-2'>I accept terms of </span><a href='' class='text-blue-400 hover:text-blue-800'> privacy policy </a>"))
+        label=mark_safe("<span class='ml-2'>I accept terms of </span><a href='/policy' class='text-blue-400 hover:text-blue-800'> privacy policy </a>"))
 
     field_order = ['username', 'email', 'password1', 'password2', 'check']
 

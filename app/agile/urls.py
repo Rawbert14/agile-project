@@ -25,6 +25,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('todo/', views.todo, name='todo'),
     path('help/', views.help, name='help'),
+    path('policy/', views.policy, name='policy'),
     path('social/', views.social, name='social'),
     path('team/', views.team, name='team'),
     path("profile/", include('profiles.urls', namespace='profiles')),
