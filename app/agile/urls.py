@@ -20,9 +20,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 from blogs import views as BlogsView
+from quiz import views as QuizViews
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    #path('quiz/', QuizViews.quiz, name='quiz'),
+    path('quiz/', include('quiz.urls')),
+    path('quizcat/', QuizViews.home, name='quiz_home'),
     path('todo/', views.todo, name='todo'),
     path('help/', views.help, name='help'),
     path('policy/', views.policy, name='policy'),

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+
+    <!-- Page title -->
+    <title>Django Quiz App!</title>
+</head>
+<body>
+
+    <!-- Vue.js app container -->
+    <div id="app" class="container mt-5 pt-5">
+        <div class="col-md-6 mx-auto">
+            <h3>Give Quiz</h3>
+
+            <!-- Loop through questions -->
+            <div v-for="question in questions" :key="question.uid">
+                <hr>
+                <p>[[question.question]]</p>
+
+                <!-- Loop through answers -->
+                <div class="form-check" v-for="(answer, index) in question.answer" :key="index">
+                    <!-- Radio button for selecting an answer -->
+                    <input
+                        @change="checkAnswer($event, question.uid)"
+                        :value="answer.answer"
+                        class="form-check-input"
+                        :id="'answer-' + question.uid + '-' + index"
+                        :name="'question-' + question.uid"
+                        type="radio">
+                    <label class="form-check-label" :for="'answer-' + question.uid + '-' + index">
+                        [[answer.answer]]
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Vue.js library -->
+    <script src="https://unpkg.com/vue@3.0.0-rc.5/dist/vue.global.prod.js"></script>
+
+    <script> 
+        Vue.createApp({
+            delimiters: ['[[', ']]'],
+            data() { 
+                return { 
+                    category: '{{ category }}', // Initialize category 
+                    questions: [] // Initialize questions array 
+                } 
+            }, 
+            methods: { 
+                getQuestions() {
+                    fetch(`/quiz/api/get-quiz/?category=${this.category}`) 
+    .then(response => response.json()) 
+    .then(result => {
+        this.questions = result.data; 
+    })
+    .catch(error => {
+        console.error('Error fetching questions:', error);
+    });
+
+                }, 
+                checkAnswer(event, questionUid) {
+                    const question = this.questions.find(q => q.uid === questionUid);
+                    const selectedAnswer = question.answer.find(a => a.answer === event.target.value);
+                    if (selectedAnswer.is_correct) {
+                        console.log('Your answer is correct!');
+                        alert("Hurray, your answer is correct!");
+                    } else {
+                        console.log('Your answer is wrong!');
+                        alert("Better luck next time!");
+                    }
+                }
+            },
+            created() { 
+                this.getQuestions(); 
+            }
+        }).mount('#app');
+    </script>
+
+</body>
+</html>
