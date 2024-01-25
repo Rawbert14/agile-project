@@ -18,9 +18,25 @@ def home(request):
   #  return render(request, 'qcategory.html', context)
 
 
+#def quiz(request):
+ #   context = {'category': request.GET.get('category')}
+  #  return render(request, 'quiz.html', context)
+
+
 def quiz(request):
-    context = {'category': request.GET.get('category')}
+    category_name = request.GET.get('category')
+    category = Category.objects.filter(category_name=category_name).first()
+    if category:
+        quiz_title = category.category_name  # Assuming the title is stored in the category_name field
+    else:
+        quiz_title = "Quiz"  # Default title if category is not found
+
+    context = {
+        'category': category_name,
+        'quiz_title': quiz_title,  # Pass the quiz title to the template
+    }
     return render(request, 'quiz.html', context)
+
 
 def get_quiz(request):
     try:

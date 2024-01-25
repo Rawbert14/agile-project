@@ -1,39 +1,56 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% extends 'base.html' %}
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossorigin="anonymous">
-
-    <!-- Page title -->
-    <title>Django Quiz App</title>
-</head>
-<body>
+{% block content %}
+{% if request.user.is_authenticated %}
 
 <div class="container mt-5 pt-5">
-    <h1 style="color: black; text-align: center;">Agile App</h1>
+    <div class="card">
+        <div class="card-body">
+            <!-- Introductory text, similar to the model -->
+            <p>Welcome to the Quiz Area. Here you can select a quiz category and test your knowledge. Choose a category and start the quiz to see how well you perform.</p>
+        </div>
+    </div>
 
-    <div class="col-md-6 mx-auto">
-        <!-- Update action URL to point to the 'quiz' view -->
-        <form action="{% url 'quiz' %}" method="get"> <!-- Changed method to 'get' -->
-            <div class="form-group">
-                <label for="categorySelect">Select Category</label>
-                <select name="category" id="categorySelect" class="form-control">
-                    <option value="">Choose</option>
-                    {% for category in categories %}
-                    <option value="{{ category.category_name }}">{{ category.category_name }}</option>
-                    {% endfor %}
-                </select>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h3 class="text-center">Select Quiz Category</h3>
+
+            <!-- Form for selecting Quiz Category -->
+            <div class="row mt-3">
+                <div class="col-md-6 col-lg-6 mx-auto">
+                    <form id="quizForm" action="{% url 'quiz:quiz' %}" method='get'>
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <select name="category" id="categorySelect" class="form-control">
+                                <option value="">Choose</option>
+                                {% for category in categories %}
+                                <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="input-group-append">
+                                <button type='submit' class="btn btn-primary"><i class="fa fa-arrow-right"></i> Start Quiz</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <button class="btn btn-danger mt-3">Submit</button>
-        </form>
+        </div>
     </div>
 </div>
 
-</body>
-</html>
+<div class="card" style="margin-top: 70px;">
+</div>
+<script>
+    document.getElementById('quizForm').addEventListener('submit', function(event) {
+        var categorySelect = document.getElementById('categorySelect');
+        if (categorySelect.value === '') {
+            event.preventDefault(); // Prevent form submission
+            alert('Please select a category to start the quiz.');
+        }
+    });
+</script>
+
+{% else %}
+<div class="text-center h3" style="margin-top: 70px;">Please log in to access the quiz.</div>
+{% endif %}
+{% endblock %}

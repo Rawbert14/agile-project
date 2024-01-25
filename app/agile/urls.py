@@ -26,7 +26,8 @@ from quiz import views as QuizViews
 urlpatterns = [
     path("admin/", admin.site.urls),
     #path('quiz/', QuizViews.quiz, name='quiz'),
-    path('quiz/', include('quiz.urls')),
+    #path('quiz/', include('quiz.urls', namespace='quiz')),
+    path('quiz/', include('quiz.urls', namespace='quiz')),
     path('quizcat/', QuizViews.home, name='quiz_home'),
     path('todo/', views.todo, name='todo'),
     path('help/', views.help, name='help'),
