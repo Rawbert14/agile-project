@@ -13,7 +13,7 @@
 
     <div class="card mt-4">
         <div class="card-body">
-            <h3 class="text-center">Select Quiz Category</h3>
+            <h3 class="text-center">Select Testing Quiz Category</h3>
 
             <!-- Form for selecting Quiz Category -->
             <div class="row mt-3">
@@ -36,6 +36,36 @@
             </div>
         </div>
     </div>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h3 class="text-center">Your Quiz Performance</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Quiz Name</th>
+                        <th class="text-center">Score in % out of 100</th>
+                        <th class="text-center">Number of Attempts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for quiz in quizzes_with_attempts %}
+                    <tr>
+                        <td class="text-center">{{ quiz.category_name }}</td>
+                        <td class="text-center">{{ quiz.score }}</td>
+                        <td class="text-center">{{ quiz.num_attempts }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center">No quizzes taken yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+
 </div>
 
 <div class="card" style="margin-top: 70px;">

@@ -8,3 +8,4 @@ class QuestionAdmin(admin.ModelAdmin):
 admin.site.register(Category) 
 admin.site.register(Question, QuestionAdmin) 
 admin.site.register(Answer) 
+admin.site.register(QuizScore) 

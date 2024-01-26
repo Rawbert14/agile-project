@@ -99,10 +99,36 @@
                 if (this.areAllQuestionsAnswered()) {
                     this.quizSubmitted = true;
                     this.calculateScore();
+                    this.sendScoreToServer();
                 } else {
                     alert('Please answer all questions before submitting the quiz.');
                 }
             },
+            sendScoreToServer() {
+                const percentageScore = (this.obtainedMarks / this.totalMarks) * 100;
+                const payload = {
+                    quiz_id: this.category, // Assuming this is the quiz ID
+                    score: percentageScore.toFixed(2),
+                    // any other data you need to send
+                };
+                fetch('/quiz/submit_score/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Include CSRF token if needed
+                    },
+                    body: JSON.stringify(payload),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Score submitted successfully');
+                    // Update UI or state as needed
+                })
+                .catch(error => {
+                    console.error('Error submitting score:', error);
+                });
+            },
+            
             areAllQuestionsAnswered() {
                 return this.questions.every(question => 
                     this.userAnswers.hasOwnProperty(question.uid));
