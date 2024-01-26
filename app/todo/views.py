@@ -5,19 +5,40 @@ from todo.models import Task
 from django.contrib.auth.models import User
 from django.contrib import messages  # Import messages
 
+from django.core.exceptions import ValidationError
+from django.utils.dateparse import parse_date
+
 @login_required
 def addTask(request):
     if request.method == 'POST':
-        task_text = request.POST.get('task', '').strip()  # Use strip() to remove leading/trailing whitespace
+        task_text = request.POST.get('task', '').strip()
         if not task_text:
-            messages.error(request, "Task cannot be empty.")  # Add an error message
-            return redirect('todo')  # Redirect back to the task form
+            messages.error(request, "Task cannot be empty.")
+            return redirect('todo')
 
         assigned_to_user = request.POST.get('assigned_to')
         assigned_to = User.objects.get(id=assigned_to_user) if assigned_to_user else None
-        Task.objects.create(task=task_text, created_by=request.user, assigned_to=assigned_to)
-        messages.success(request, "Task added successfully.")  # Optional success message
+        deadline_text = request.POST.get('deadline')
+
+        # Check if deadline_text is a valid date
+        deadline = None
+        if deadline_text:
+            try:
+                deadline = parse_date(deadline_text)
+                if not deadline:
+                    raise ValidationError("Invalid date format. It must be in YYYY-MM-DD format.")
+            except ValidationError as e:
+                messages.error(request, str(e))
+                return redirect('todo')
+
+        # Inside your addTask view
+        urgency = request.POST.get('urgency', Task.LOW)
+        Task.objects.create(task=task_text, urgency=urgency, deadline=deadline, created_by=request.user, assigned_to=assigned_to)
+        messages.success(request, "Task added successfully.")
+        
     return redirect('todo')
+
+
 
 
 
@@ -60,7 +81,13 @@ def edit_task(request, pk):
 
             task.task = task_text
             task.assigned_to = assigned_to
+            # In your edit_task view
+            deadline = request.POST.get('deadline')
+            task.deadline = deadline if deadline else None
+            # Inside your edit_task view
+            task.urgency = request.POST.get('urgency', Task.LOW)
             task.save()
+
 
             return redirect('todo')
         except ValidationError as e:

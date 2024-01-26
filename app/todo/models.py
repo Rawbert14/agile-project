@@ -10,6 +10,15 @@ class Task(models.Model):
         (IN_PROGRESS, 'In Progress'),
         (DONE, 'Done'),
     ]
+    
+    LOW = 'L'
+    MEDIUM = 'M'
+    HIGH = 'H'
+    URGENCY_CHOICES = [
+        (LOW, 'Low'),
+        (MEDIUM, 'Medium'),
+        (HIGH, 'High'),
+    ]
 
     task = models.CharField(max_length=200)
     status = models.CharField(
@@ -49,6 +58,15 @@ class Task(models.Model):
         null=True,
         blank=True
     )
+    
+    deadline = models.DateField(null=True, blank=True)
+    
+    urgency = models.CharField(
+        max_length=1,
+        choices=URGENCY_CHOICES,
+        default=LOW,
+    )
+    
 
     def __str__(self):
         return self.task

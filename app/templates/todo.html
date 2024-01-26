@@ -17,35 +17,127 @@
     <div class="card mt-4">
         <div class="card-body">
             <h3 class="text-center">Tasks Assigned to Me</h3>
-            <div class="overflow-auto" style="max-height: 450px;">
-                {% for task in assigned_tasks %}
-                <div class="card mb-1">
-                    <div class="card-body text-center">
-                        {{ task.task }}
-                        <div class="mt-2">
-                            <small>Created by: {{ task.created_by.username }}</small>
-                        </div>
-                        <!-- Task action buttons -->
-                        <div class="mt-2">
-                            <a href="{% url 'edit_task' task.pk %}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i> Edit</a>
-                            <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
-                            
-                            {% if task.status == 'TD' %}
-                            <a href="{% url 'mark_as_in_progress' task.pk %}" class="btn btn-warning btn-sm"><i class="fa fa-forward"></i> In Progress</a>
-                            {% elif task.status == 'IP' %}
-                            <a href="{% url 'mark_as_done_from_in_progress' task.pk %}" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Done</a>
-                            {% elif task.status == 'DN' %}
-                            <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-secondary btn-sm"><i class="fa fa-undo"></i> Undo</a>
+            <div class="row">
+                <!-- Low Urgency Tasks -->
+                <div class="col-md-4 text-center">
+                    <h4>Low Urgency</h4>
+                    <div class="overflow-auto" style="max-height: 450px;">
+                        {% for task in assigned_tasks %}
+                            {% if task.urgency == 'L' %}
+                                <div class="card mb-1">
+                                    <div class="card-body text-center">
+                                        {{ task.task }}
+                                        <div class="mt-2">
+                                            <small>Created by: {{ task.created_by.username }}</small>
+                                            <div><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></div>
+                                            {% if task.deadline and task.deadline < today %}
+                                                <span class="text-danger">(Past Deadline)</span>
+                                            {% elif task.deadline and task.deadline <= five_days_later %}
+                                                <span class="text-warning">(Incoming Deadline)</span>
+                                            {% endif %}
+                                            <br><small>Urgency: Low</small></br>
+                                        </div>
+                                        <div class="mt-2">
+                                            <a href="{% url 'edit_task' task.pk %}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i> Edit</a>
+                                            <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
+                                            {% if task.status == 'TD' %}
+                                                <a href="{% url 'mark_as_in_progress' task.pk %}" class="btn btn-warning btn-sm"><i class="fa fa-forward"></i> In Progress</a>
+                                            {% elif task.status == 'IP' %}
+                                                <a href="{% url 'mark_as_done_from_in_progress' task.pk %}" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Done</a>
+                                            {% elif task.status == 'DN' %}
+                                                <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-secondary btn-sm"><i class="fa fa-undo"></i> Undo</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
                             {% endif %}
-                        </div>
+                        {% empty %}
+                            <p>No low urgency tasks assigned to you.</p>
+                        {% endfor %}
                     </div>
                 </div>
-                {% empty %}
-                <p>No tasks assigned to you.</p>
-                {% endfor %}
+    
+                <!-- Medium Urgency Tasks -->
+                <div class="col-md-4 text-center">
+                    <h4>Medium Urgency</h4>
+                    <div class="overflow-auto" style="max-height: 450px;">
+                        {% for task in assigned_tasks %}
+                            {% if task.urgency == 'M' %}
+                                <div class="card mb-1">
+                                    <div class="card-body text-center">
+                                        {{ task.task }}
+                                        <div class="mt-2">
+                                            <small>Created by: {{ task.created_by.username }}</small>
+                                            <div><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></div>
+                                            {% if task.deadline and task.deadline < today %}
+                                                <span class="text-danger">(Past Deadline)</span>
+                                            {% elif task.deadline and task.deadline <= five_days_later %}
+                                                <span class="text-warning">(Incoming Deadline)</span>
+                                            {% endif %}
+                                            <br><small>Urgency: Medium</small></br>
+                                        </div>
+                                        <div class="mt-2">
+                                            <a href="{% url 'edit_task' task.pk %}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i> Edit</a>
+                                            <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
+                                            {% if task.status == 'TD' %}
+                                                <a href="{% url 'mark_as_in_progress' task.pk %}" class="btn btn-warning btn-sm"><i class="fa fa-forward"></i> In Progress</a>
+                                            {% elif task.status == 'IP' %}
+                                                <a href="{% url 'mark_as_done_from_in_progress' task.pk %}" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Done</a>
+                                            {% elif task.status == 'DN' %}
+                                                <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-secondary btn-sm"><i class="fa fa-undo"></i> Undo</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% empty %}
+                            <p>No medium urgency tasks assigned to you.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+    
+                <!-- High Urgency Tasks -->
+                <div class="col-md-4 text-center">
+                    <h4>High Urgency</h4>
+                    <div class="overflow-auto" style="max-height: 450px;">
+                        {% for task in assigned_tasks %}
+                            {% if task.urgency == 'H' %}
+                                <div class="card mb-1">
+                                    <div class="card-body text-center">
+                                        {{ task.task }}
+                                        <div class="mt-2">
+                                            <small>Created by: {{ task.created_by.username }}</small>
+                                            <div><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></div>
+                                            {% if task.deadline and task.deadline < today %}
+                                                <span class="text-danger">(Past Deadline)</span>
+                                            {% elif task.deadline and task.deadline <= five_days_later %}
+                                                <span class="text-warning">(Incoming Deadline)</span>
+                                            {% endif %}
+                                            <br><small>Urgency: High</small></br>
+                                        </div>
+                                        <div class="mt-2">
+                                            <a href="{% url 'edit_task' task.pk %}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i> Edit</a>
+                                            <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
+                                            {% if task.status == 'TD' %}
+                                                <a href="{% url 'mark_as_in_progress' task.pk %}" class="btn btn-warning btn-sm"><i class="fa fa-forward"></i> In Progress</a>
+                                            {% elif task.status == 'IP' %}
+                                                <a href="{% url 'mark_as_done_from_in_progress' task.pk %}" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Done</a>
+                                            {% elif task.status == 'DN' %}
+                                                <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-secondary btn-sm"><i class="fa fa-undo"></i> Undo</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% empty %}
+                            <p>No high urgency tasks assigned to you.</p>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
     
 
     <div class="card mt-4">
@@ -64,8 +156,12 @@
                                 <small>Created by: {{ task.created_by.username }}</small>
                                 {% if task.assigned_to %}
                         <br><small>Assigned to: {{ task.assigned_to.username }}</small>
+                        <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
+                        <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
                     {% else %}
                         <br><small>Assigned to: Not assigned</small>
+                        <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
+                        <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
                     {% endif %}
                                 </div>
                                 <span class="float-right">
@@ -91,8 +187,12 @@
                                 <small>Moved to In Progress by: {{ task.in_progress_by.username }}</small>
                                 {% if task.assigned_to %}
                         <br><small>Assigned to: {{ task.assigned_to.username }}</small>
+                        <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
+                        <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
                     {% else %}
                         <br><small>Assigned to: Not assigned</small>
+                            <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
+                            <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
                     {% endif %}
                                 </div>
                                 <span class="float-right">
@@ -116,8 +216,12 @@
                                 <small>Marked as Done by: {{ task.done_by.username }}</small>
                                 {% if task.assigned_to %}
                         <br><small>Assigned to: {{ task.assigned_to.username }}</small>
+                        <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
+                        <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
                     {% else %}
                         <br><small>Assigned to: Not assigned</small>
+                        <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
+                        <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
                     {% endif %}
                                 </div>
                                 <span style="position: relative; float: right;">
@@ -147,6 +251,17 @@
                     {% endfor %}
                 </select>
             </div>
+            <div class="mb-3">
+                <input type="date" name="deadline" class="form-control" placeholder="Deadline">
+            </div>
+            <div class="mb-3">
+                <select name="urgency" class="form-control">
+                    <option value="L">Low</option>
+                    <option value="M">Medium</option>
+                    <option value="H">High</option>
+                </select>
+            </div>
+            
             <button type='submit' class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
         </form>
     </div>

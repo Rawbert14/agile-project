@@ -36,6 +36,17 @@
         {% endfor %}
     </select>
 </div>
+<div class="mb-3">
+    <input type="date" name="deadline" class="form-control" value="{{ task.deadline|date:'Y-m-d' }}" placeholder="Deadline">
+</div>
+<div class="mb-3">
+    <select name="urgency" class="form-control">
+        <option value="L" {% if task.urgency == 'L' %}selected{% endif %}>Low</option>
+        <option value="M" {% if task.urgency == 'M' %}selected{% endif %}>Medium</option>
+        <option value="H" {% if task.urgency == 'H' %}selected{% endif %}>High</option>
+    </select>
+</div>
+
 
                 </form>
             </div>
