@@ -45,7 +45,7 @@
                                             {% elif task.status == 'IP' %}
                                                 <a href="{% url 'mark_as_done_from_in_progress' task.pk %}" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Done</a>
                                             {% elif task.status == 'DN' %}
-                                                <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-secondary btn-sm"><i class="fa fa-undo"></i> Undo</a>
+                                                <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-warning btn-sm"><i class="fa fa-undo"></i> Undo</a>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@
                                             {% elif task.status == 'IP' %}
                                                 <a href="{% url 'mark_as_done_from_in_progress' task.pk %}" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Done</a>
                                             {% elif task.status == 'DN' %}
-                                                <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-secondary btn-sm"><i class="fa fa-undo"></i> Undo</a>
+                                                <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-warning btn-sm"><i class="fa fa-undo"></i> Undo</a>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -123,7 +123,7 @@
                                             {% elif task.status == 'IP' %}
                                                 <a href="{% url 'mark_as_done_from_in_progress' task.pk %}" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Done</a>
                                             {% elif task.status == 'DN' %}
-                                                <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-secondary btn-sm"><i class="fa fa-undo"></i> Undo</a>
+                                                <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-warning btn-sm"><i class="fa fa-undo"></i> Undo</a>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -140,7 +140,7 @@
     
     
 
-    <div class="card mt-4">
+    <div class="card mt-4 text-center">
         <div class="card-body">
             <h3 class="text-center">ToDo Section</h3>
             <div class="row">
@@ -164,10 +164,10 @@
                         <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
                     {% endif %}
                                 </div>
-                                <span class="float-right">
-                                    <a href="{% url 'mark_as_in_progress' task.pk %}" class="btn btn-warning"><i class="fa fa-forward"></i> In Progress</a>
-                                    <a href="{% url 'edit_task' task.pk %}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                                    <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                <span style="display: block; text-align: center;">
+                                    <a href="{% url 'mark_as_in_progress' task.pk %}" class="btn btn-warning btn-sm"><i class="fa fa-forward"></i> In Progress</a>
+                                    <a href="{% url 'edit_task' task.pk %}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                                    <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                                 </span>
                             </div>
                         </div>
@@ -195,8 +195,8 @@
                             <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
                     {% endif %}
                                 </div>
-                                <span class="float-right">
-                                    <a href="{% url 'mark_as_done_from_in_progress' task.pk %}" class="btn btn-success"><i class="fa fa-check"></i> Done</a>
+                                <span style="display: block; text-align: center;">
+                                    <a href="{% url 'mark_as_done_from_in_progress' task.pk %}" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Done</a>
                                 </span>
                             </div>
                         </div>
@@ -224,9 +224,9 @@
                         <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
                     {% endif %}
                                 </div>
-                                <span style="position: relative; float: right;">
-                                    <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-danger"><i class="fa fa-undo"></i> Undo</a>
-                                    <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                <span style="display: block; text-align: center;">
+                                    <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-warning btn-sm"><i class="fa fa-undo"></i> Undo</a>
+                                    <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                                 </span>
                             </div>
                         </div>
@@ -235,40 +235,54 @@
                 </div>
             </div>
 
-            <!-- Add Task Form -->
-<div class="row mt-3">
-    <div class="col-md-6 col-lg-6 mx-auto">
-        <form action="{% url 'addTask' %}" method='POST'>
-            {% csrf_token %}
-            <div class="input-group mb-3">
-                <input type="text" name='task' class="form-control" placeholder="Add a task">
-            </div>
-            <div class="mb-3">
-                <select name="assigned_to" class="form-control">
-                    <option value="">Assign to...</option>
-                    {% for user in users %}
-                    <option value="{{ user.id }}">{{ user.username }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="mb-3">
-                <input type="date" name="deadline" class="form-control" placeholder="Deadline">
-            </div>
-            <div class="mb-3">
-                <select name="urgency" class="form-control">
-                    <option value="L">Low</option>
-                    <option value="M">Medium</option>
-                    <option value="H">High</option>
-                </select>
-            </div>
-            
-            <button type='submit' class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
-        </form>
-    </div>
-</div>
+       
 
         </div>
     </div>
+
+
+
+    <div class="container mt-4"> <!-- Optional container for spacing -->
+        <div class="card">
+            <div class="card-body">
+                <h3 class="text-center">Add New Task</h3>
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 mx-auto">
+                        <form action="{% url 'addTask' %}" method='POST'>
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                                <input type="text" name='task' class="form-control" placeholder="Add a task">
+                            </div>
+                            <div class="mb-3">
+                                <select name="assigned_to" class="form-control">
+                                    <option value="">Assign to...</option>
+                                    {% for user in users %}
+                                    <option value="{{ user.id }}">{{ user.username }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <input type="date" name="deadline" class="form-control" placeholder="Deadline">
+                            </div>
+                            <div class="mb-3">
+                                <select name="urgency" class="form-control">
+                                    <option value="L">Low</option>
+                                    <option value="M">Medium</option>
+                                    <option value="H">High</option>
+                                </select>
+                            </div>
+                            <button type='submit' class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+
 </div>
 
 <div class="card" style="margin-top: 70px;">

@@ -81,7 +81,7 @@ class ReportUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'reports/update.html'
     
     def get_success_url(self):
-        return self.request.path
+        return reverse_lazy('reports:summary-view')
     
     
 

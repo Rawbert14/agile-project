@@ -38,27 +38,31 @@
             </div>
             
         </div>
-        <div class="card" style="margin-top: 30px;">
+        <div class='' style="margin-top: 30px;">
         </div>
 
-        <!-- Results display -->
+<!-- Results display -->
 <div v-if="quizSubmitted" class="container mt-5 pt-5">
-    <div class="col-md-6 mx-auto">
+    <div class="col-lg-12 mx-auto"> <!-- Changed to col-lg-12 to use full width on large screens -->
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title text-center">Quiz Results</h3>
-                <div v-for="(answer, questionUid) in userAnswers" :key="questionUid">
-                    <p>Question: [[questionsMap[questionUid].question]]</p>
-                    <p>Your Answer: [[answer]]</p>
-                    <p v-if="answer === questionsMap[questionUid].correct_answer">Correct</p>
-                    <p v-else>Incorrect</p>
+                <div v-for="(answer, questionUid) in userAnswers" :key="questionUid" class="mb-3"> <!-- Added bottom margin -->
+                    <p class="mb-1">Question: [[questionsMap[questionUid].question]]</p> <!-- Reduced bottom margin -->
+                    <p class="mb-1">Your Answer: [[answer]]</p> <!-- Reduced bottom margin -->
+                    <p v-if="answer === questionsMap[questionUid].correct_answer" class="text-success">Correct</p>
+                    <p v-else class="text-danger">Incorrect</p>
                 </div>
-                <p class="text-center">You scored [[obtainedMarks]] out of [[totalMarks]]</p>
-                <p class="text-center">That's [[(obtainedMarks / totalMarks * 100).toFixed(2)]]%</p>
+                <h4 class="text-center">You scored [[obtainedMarks]] out of [[totalMarks]]</h4> <!-- Made score larger -->
+                <h4 class="text-center">That's [[(obtainedMarks / totalMarks * 100).toFixed(2)]]%</h4> <!-- Made percentage larger -->
+                <div class="mt-4 text-center">
+                    <a href="{% url 'quiz:quiz_home' %}" class="btn btn-primary btn-lg">Go back to Quiz area</a> <!-- Made button larger -->
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
     <div class="card" style="margin-top: 30px;">
     </div>
