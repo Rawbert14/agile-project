@@ -4,6 +4,8 @@ from django.shortcuts import render
 from blogs.models import Category, Blog
 from todo.models import Task
 from profiles.models import Profile
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -16,17 +18,23 @@ def home(request):
     return render(request, 'home.html', context)
 
 
+@login_required
 def todo(request):
     tasks = Task.objects.filter(status=Task.TODO).order_by('-updated_at')
     in_progress_tasks = Task.objects.filter(status=Task.IN_PROGRESS).order_by('-updated_at')
     completed_tasks = Task.objects.filter(status=Task.DONE).order_by('-updated_at')
+    
+    # Get tasks assigned to the logged-in user
+    assigned_tasks = Task.objects.filter(assigned_to=request.user).order_by('-updated_at')
 
     context = {
         'tasks': tasks,
         'in_progress_tasks': in_progress_tasks,
-        'completed_tasks': completed_tasks
+        'completed_tasks': completed_tasks,
+        'assigned_tasks': assigned_tasks,  # Add this line
     }
     return render(request, 'todo.html', context)
+
 
 def help(request):
     return render(request, 'help.html')

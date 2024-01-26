@@ -16,6 +16,40 @@
 
     <div class="card mt-4">
         <div class="card-body">
+            <h3 class="text-center">Tasks Assigned to Me</h3>
+            <div class="overflow-auto" style="max-height: 450px;">
+                {% for task in assigned_tasks %}
+                <div class="card mb-1">
+                    <div class="card-body text-center">
+                        {{ task.task }}
+                        <div class="mt-2">
+                            <small>Created by: {{ task.created_by.username }}</small>
+                        </div>
+                        <!-- Task action buttons -->
+                        <div class="mt-2">
+                            <a href="{% url 'edit_task' task.pk %}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i> Edit</a>
+                            <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
+                            
+                            {% if task.status == 'TD' %}
+                            <a href="{% url 'mark_as_in_progress' task.pk %}" class="btn btn-warning btn-sm"><i class="fa fa-forward"></i> In Progress</a>
+                            {% elif task.status == 'IP' %}
+                            <a href="{% url 'mark_as_done_from_in_progress' task.pk %}" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Done</a>
+                            {% elif task.status == 'DN' %}
+                            <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-secondary btn-sm"><i class="fa fa-undo"></i> Undo</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No tasks assigned to you.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="card mt-4">
+        <div class="card-body">
             <h3 class="text-center">ToDo Section</h3>
             <div class="row">
                 <!-- Tasks to be done -->
@@ -28,6 +62,11 @@
                                 {{ task.task }}
                                 <div class="mt-2">
                                 <small>Created by: {{ task.created_by.username }}</small>
+                                {% if task.assigned_to %}
+                        <br><small>Assigned to: {{ task.assigned_to.username }}</small>
+                    {% else %}
+                        <br><small>Assigned to: Not assigned</small>
+                    {% endif %}
                                 </div>
                                 <span class="float-right">
                                     <a href="{% url 'mark_as_in_progress' task.pk %}" class="btn btn-warning"><i class="fa fa-forward"></i> In Progress</a>
@@ -50,6 +89,11 @@
                                 {{ task.task }}
                                 <div class="mt-2">
                                 <small>Moved to In Progress by: {{ task.in_progress_by.username }}</small>
+                                {% if task.assigned_to %}
+                        <br><small>Assigned to: {{ task.assigned_to.username }}</small>
+                    {% else %}
+                        <br><small>Assigned to: Not assigned</small>
+                    {% endif %}
                                 </div>
                                 <span class="float-right">
                                     <a href="{% url 'mark_as_done_from_in_progress' task.pk %}" class="btn btn-success"><i class="fa fa-check"></i> Done</a>
@@ -70,6 +114,11 @@
                                 {{ task.task }}
                                 <div class="mt-2">
                                 <small>Marked as Done by: {{ task.done_by.username }}</small>
+                                {% if task.assigned_to %}
+                        <br><small>Assigned to: {{ task.assigned_to.username }}</small>
+                    {% else %}
+                        <br><small>Assigned to: Not assigned</small>
+                    {% endif %}
                                 </div>
                                 <span style="position: relative; float: right;">
                                     <a href="{% url 'mark_as_undone' task.pk %}" class="btn btn-danger"><i class="fa fa-undo"></i> Undo</a>
@@ -83,19 +132,26 @@
             </div>
 
             <!-- Add Task Form -->
-            <div class="row mt-3">
-                <div class="col-md-6 col-lg-6 mx-auto">
-                    <form action="{% url 'addTask' %}" method='POST'>
-                        {% csrf_token %}
-                        <div class="input-group">
-                            <input type="text" name='task' class="form-control" placeholder="Add a task">
-                            <div class="input-group-append">
-                                <button type='submit' class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+<div class="row mt-3">
+    <div class="col-md-6 col-lg-6 mx-auto">
+        <form action="{% url 'addTask' %}" method='POST'>
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <input type="text" name='task' class="form-control" placeholder="Add a task">
             </div>
+            <div class="mb-3">
+                <select name="assigned_to" class="form-control">
+                    <option value="">Assign to...</option>
+                    {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type='submit' class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
+        </form>
+    </div>
+</div>
+
         </div>
     </div>
 </div>

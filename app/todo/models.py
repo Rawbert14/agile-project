@@ -42,6 +42,13 @@ class Task(models.Model):
         null=True,
         blank=True
     )
+    assigned_to = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='assigned_tasks',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return self.task
