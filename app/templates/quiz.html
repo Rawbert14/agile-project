@@ -5,33 +5,54 @@
 
 <div id="app" class="container mt-5 pt-5">
     <div class="col-md-6 mx-auto">
-        <div class="card">
+        <div class="card" v-if="!quizSubmitted">
             <div class="card-body">
                 <h3 class="card-title text-center">{{ quiz_title }}</h3>
-                <!-- Loop through questions -->
-                <div v-for="question in questions" :key="question.uid" class="mt-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="card-text">[[question.question]]</p>
-                            <!-- Loop through answers -->
-                            <div class="form-check" v-for="(answer, index) in question.answer" :key="index">
-                                <!-- Radio button for selecting an answer -->
-                                <input
-                                    @change="checkAnswer($event, question.uid)"
-                                    :value="answer.answer"
-                                    class="form-check-input"
-                                    :id="'answer-' + question.uid + '-' + index"
-                                    :name="'question-' + question.uid"
-                                    type="radio">
-                                <label class="form-check-label" :for="'answer-' + question.uid + '-' + index">
-                                    [[answer.answer]]
-                                </label>
+                <form @submit.prevent="submitQuiz">
+                    <!-- Loop through questions -->
+                    <div v-for="question in questions" :key="question.uid" class="mt-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">[[question.question]]</p>
+                                <!-- Loop through answers -->
+                                <div class="form-check" v-for="(answer, index) in question.answers" :key="index">
+                                    <!-- Radio button for selecting an answer -->
+                                    <input
+                                        v-model="userAnswers[question.uid]"
+                                        :value="answer.answer"
+                                        class="form-check-input"
+                                        :id="'answer-' + question.uid + '-' + index"
+                                        :name="'question-' + question.uid"
+                                        type="radio">
+                                    <label class="form-check-label" :for="'answer-' + question.uid + '-' + index">
+                                        [[answer.answer]]
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="mt-4 text-center">
+                        <button type="submit" class="btn btn-primary">Submit Quiz</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+        <div class="card" style="margin-top: 30px;">
+        </div>
+
+        <div class="card" v-if="quizSubmitted">
+            <div class="card-body">
+                <h3 class="card-title text-center">Quiz Results</h3>
+                <div v-for="(answer, questionUid) in userAnswers" :key="questionUid">
+                    <p>Question: [[questionsMap[questionUid].question]]</p>
+                    <p>Your Answer: [[answer]]</p>
+                    <p v-if="answer === questionsMap[questionUid].correct_answer">Correct</p>
+                    <p v-else>Incorrect</p>
                 </div>
             </div>
-        </div>
+    </div>
+    <div class="card" style="margin-top: 30px;">
     </div>
 </div>
 
@@ -41,9 +62,12 @@
         delimiters: ['[[', ']]'],
         data() {
             return {
-                category: '{{ category }}', // Initialize category from Django template
-                questions: [] // Initialize questions array
-            }
+                category: '{{ category }}',
+                questions: [],
+                userAnswers: {},
+                quizSubmitted: false,
+                questionsMap: {}
+            };
         },
         methods: {
             getQuestions() {
@@ -51,30 +75,34 @@
                     .then(response => response.json())
                     .then(result => {
                         this.questions = result.data;
+                        // Create a map for easier access
+                        this.questionsMap = this.questions.reduce((map, question) => {
+                            map[question.uid] = question;
+                            return map;
+                        }, {});
                     })
                     .catch(error => {
                         console.error('Error fetching questions:', error);
                     });
             },
-            checkAnswer(event, questionUid) {
-                const question = this.questions.find(q => q.uid === questionUid);
-                const selectedAnswer = question.answer.find(a => a.answer === event.target.value);
-                if (selectedAnswer.is_correct) {
-                    console.log('Your answer is correct!');
-                    alert("Hurray, your answer is correct!");
+            submitQuiz() {
+                if (this.areAllQuestionsAnswered()) {
+                    this.quizSubmitted = true;
                 } else {
-                    console.log('Your answer is wrong!');
-                    alert("Better luck next time!");
+                    alert('Please answer all questions before submitting the quiz.');
                 }
+            },
+            areAllQuestionsAnswered() {
+                return this.questions.every(question => 
+                    this.userAnswers.hasOwnProperty(question.uid));
             }
         },
         created() {
-            this.getQuestions(); // Fetch questions when component is created
+            this.getQuestions();
         }
     }).mount('#app');
 </script>
-<div class="card" style="margin-top: 70px;">
-</div>
+
 {% else %}
 <div class="text-center h3" style="margin-top: 70px;">Please log in to access the quiz.</div>
 {% endif %}
