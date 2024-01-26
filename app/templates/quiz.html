@@ -41,7 +41,10 @@
         <div class="card" style="margin-top: 30px;">
         </div>
 
-        <div class="card" v-if="quizSubmitted">
+        <!-- Results display -->
+<div v-if="quizSubmitted" class="container mt-5 pt-5">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
             <div class="card-body">
                 <h3 class="card-title text-center">Quiz Results</h3>
                 <div v-for="(answer, questionUid) in userAnswers" :key="questionUid">
@@ -50,8 +53,13 @@
                     <p v-if="answer === questionsMap[questionUid].correct_answer">Correct</p>
                     <p v-else>Incorrect</p>
                 </div>
+                <p class="text-center">You scored [[obtainedMarks]] out of [[totalMarks]]</p>
+                <p class="text-center">That's [[(obtainedMarks / totalMarks * 100).toFixed(2)]]%</p>
             </div>
+        </div>
     </div>
+</div>
+
     <div class="card" style="margin-top: 30px;">
     </div>
 </div>
@@ -66,7 +74,9 @@
                 questions: [],
                 userAnswers: {},
                 quizSubmitted: false,
-                questionsMap: {}
+                questionsMap: {},
+                totalMarks: 0,
+                obtainedMarks: 0
             };
         },
         methods: {
@@ -75,7 +85,7 @@
                     .then(response => response.json())
                     .then(result => {
                         this.questions = result.data;
-                        // Create a map for easier access
+                        this.totalMarks = this.questions.reduce((sum, question) => sum + question.marks, 0);
                         this.questionsMap = this.questions.reduce((map, question) => {
                             map[question.uid] = question;
                             return map;
@@ -88,6 +98,7 @@
             submitQuiz() {
                 if (this.areAllQuestionsAnswered()) {
                     this.quizSubmitted = true;
+                    this.calculateScore();
                 } else {
                     alert('Please answer all questions before submitting the quiz.');
                 }
@@ -95,6 +106,14 @@
             areAllQuestionsAnswered() {
                 return this.questions.every(question => 
                     this.userAnswers.hasOwnProperty(question.uid));
+            },
+            calculateScore() {
+                this.obtainedMarks = this.questions.reduce((sum, question) => {
+                    if (this.userAnswers[question.uid] === question.correct_answer) {
+                        return sum + question.marks;
+                    }
+                    return sum;
+                }, 0);
             }
         },
         created() {
@@ -102,6 +121,7 @@
         }
     }).mount('#app');
 </script>
+
 
 {% else %}
 <div class="text-center h3" style="margin-top: 70px;">Please log in to access the quiz.</div>
