@@ -21,6 +21,10 @@ class ReportForm(forms.ModelForm):
         model = Report
         #fields = '__all__'
         exclude = ('user', 'production_line',)
+        widgets = {
+            'start_hour': forms.TimeInput(format='%H:%M', attrs={'type': 'time'}),
+            'end_hour': forms.TimeInput(format='%H:%M', attrs={'type': 'time'}),
+        }
     
     def __init__(self, *args, **kwargs):
         production_line = kwargs.pop('production_line', None)
@@ -40,9 +44,8 @@ class ProblemReportedForm(forms.ModelForm):
         
         
 class ReportResultForm(forms.Form):
-    production_line = forms.ModelChoiceField(queryset=ProductionLine.objects.all(), label='Select a Project')
-    day = forms.CharField(widget=forms.DateTimeInput(attrs={'class': 'datepicker'}))
-
+    production_line = forms.ModelChoiceField(queryset=ProductionLine.objects.all())
+    day = forms.CharField(widget=forms.DateTimeInput(attrs= {'class': 'datepicker'}))
     
     
     
