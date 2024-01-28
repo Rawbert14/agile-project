@@ -40,8 +40,9 @@ class ProblemReportedForm(forms.ModelForm):
         
         
 class ReportResultForm(forms.Form):
-    production_line = forms.ModelChoiceField(queryset=ProductionLine.objects.all())
-    day = forms.CharField(widget=forms.DateTimeInput(attrs= {'class': 'datepicker'}))
+    production_line = forms.ModelChoiceField(queryset=ProductionLine.objects.all(), label='Select a Project')
+    day = forms.CharField(widget=forms.DateTimeInput(attrs={'class': 'datepicker'}))
+
     
     
     

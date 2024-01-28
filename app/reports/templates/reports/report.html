@@ -1,127 +1,122 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% block title %} report {% endblock title%}
+{% block title %}Report{% endblock title %}
 
-{% block content %} 
+{% block content %}
 
-
-  
-  <!-- Modal -->
-  <div class="modal fade" id="problemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" role="document" >
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Report Problems</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+<div class="container mt-5" style="margin-top: 70px;">
+    <!-- Introductory Information Card -->
+    <div class="card mb-4" style="margin-top: 90px;">
+        <div class="card-body">
+            <h5 class="card-title">Project Overview</h5>
+            <p class="card-text">
+                This tool is designed primarily for team managers to identify issues pertaining to specific projects. Managers can access detailed reports at the conclusion of each day, which helps pinpoint potential problems for attention.
+            </p>
+            <p class="card-text">
+                For further inquiries or feedback, please reach out to us at <a href="mailto:2549168@student.gla.ac.uk">2549168@student.gla.ac.uk</a>.
+            </p>
         </div>
-        <form action="" method="POST">
-            {% csrf_token %}
-        <div class="modal-body">
-
-
-            
-          {{pform|crispy}}
-          <input type="hidden" name="report_id" id="report_id">
-            
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" name="submitbtn1" class="btn btn-primary">Send</button>
-        </div>
-    </form>
-      </div>
     </div>
-  </div>
 
+    <!-- Selection Form Card -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Select a Project and Date</h5>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+            </form>
+        </div>
+    </div>
 
-
-
-<div class="container bg-white shadow-lg rounded py-2" >
-<div class="row">
-<div class="col-2" style="margin-top: 70px;">
-    <form action="" method="POST">
-        {% csrf_token %}
-
- {{form|crispy}}
- <button type="submit" name="submitbtn2" class="btn btn-primary w-100 shadow-sm mt-3">
- <i class="fa-solid fa-share pr-3"></i>Send</button>
-    </form>
-
+    <!-- Reports Table Card -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Project Reports</h5>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-light">
+                        <tr class="text-center">
+                            <th scope="col">Day</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Start</th>
+                            <th scope="col">End</th>
+                            <th scope="col">Sprint</th>
+                            <th scope="col">Expected</th>
+                            <th scope="col">Actual</th>
+                            <th scope="col">Project</th>
+                            <th scope="col">Problems</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in object_list %}
+                        <tr class="text-center">
+                          <td>{{obj.get_day}}</td>
+                          <td>{{obj.user}}</td>
+                          <td>{{obj.start_hour}}</td>
+                          <td>{{obj.end_hour}}</td>
+                          <td>{{obj.product}}</td>
+                          <td>{{obj.plan}}</td>
+                          <td>{{obj.execution}}</td>
+                          <td>{{obj.production_line}}</td>
+          
+                          <td class="fit">
+                              <button class="btn btn-warning open-modal" data-toggle="modal" data-target="#problemModal" data-url={{obj.id}}><i class="fa-solid fa-exclamation"></i></button>
+                          </td>
+          
+                          <td class="fit">
+                              <a href="{{obj.get_absolute_url}}"><button class="btn btn-info"><i class="fa-solid fa-gear"></i></button></a>
+                          </td>
+          
+                          {% if obj.user == request.user %}
+          
+                          <td class="fit">
+                              <a href="{% url "reports:delete-view" pk=obj.id %}"><button class="btn btn-danger"><i class="fa-solid fa-trash-can-arrow-up"></i></button></a>
+                          </td>
+                          {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="col-10" style="margin-top: 70px;">
-<div style="overflow-y:scroll; height:100vh" class = "w-100 bg-light rounded border">
-    <table class="table">
-        <thead class="thead-light">
-            <tr class="text-center">
-                <th scope="col">Day</th>
-                <th scope="col">User</th>
-                <th scope="col">Start</th>
-                <th scope="col">End</th>
-                <th scope="col">Sprint</th>
-                <th scope="col">Expected</th>
-                <th scope="col">Actual</th>
-                <th scope="col">Project</th>
-                <th scope="col">Problems</th>
-                <th scope="col">Edit</th>
-                
-                <th scope="col">Delete</th>
-                
-
-            </tr>
-        </thead>
-
-        <tbody>
-        {% for obj in object_list %}
-            <tr class="text-center">
-                <td>{{obj.get_day}}</td>
-                <td>{{obj.user}}</td>
-                <td>{{obj.start_hour}}</td>
-                <td>{{obj.end_hour}}</td>
-                <td>{{obj.product}}</td>
-                <td>{{obj.plan}}</td>
-                <td>{{obj.execution}}</td>
-                <td>{{obj.production_line}}</td>
-
-                <td class="fit">
-                    <button class="btn btn-warning open-modal" data-toggle="modal" data-target="#problemModal" data-url={{obj.id}}><i class="fa-solid fa-exclamation"></i></button>
-                </td>
-
-                <td class="fit">
-                    <a href="{{obj.get_absolute_url}}"><button class="btn btn-info"><i class="fa-solid fa-gear"></i></button></a>
-                </td>
-
-                {% if obj.user == request.user %}
-
-                <td class="fit">
-                    <a href="{% url "reports:delete-view" pk=obj.id %}"><button class="btn btn-danger"><i class="fa-solid fa-trash-can-arrow-up"></i></button></a>
-                </td>
-                {% endif %}
-                
-
-            </tr>
-        {% endfor %}
-        
-        </tbody>
-
-    </table>
-</div>
-</div>
-
-</div>
+<!-- Problem Modal -->
+<div class="modal fade" id="problemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Report Problems</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    {{ pform|crispy }}
+                    <input type="hidden" name="report_id" id="report_id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="submitbtn1" class="btn btn-primary">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <script>
-
-$(".open-modal").on("click", function()
-{
-    const r_id = $(this).attr("data-url")
-    $("#report_id").val(r_id)
-    //console.log(r_id)
-})
-
+    // Script for handling the problem report modal
+    $(".open-modal").on("click", function() {
+        const reportId = $(this).data("url");
+        $("#report_id").val(reportId);
+    });
 </script>
 
 {% endblock content %}

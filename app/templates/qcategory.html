@@ -44,6 +44,7 @@
                 <thead>
                     <tr>
                         <th class="text-center">Quiz Name</th>
+                        <th class="text-center">Description/Guidance</th>
                         <th class="text-center">Score in % out of 100</th>
                         <th class="text-center">Number of Attempts</th>
                     </tr>
@@ -52,6 +53,7 @@
                     {% for quiz in quizzes_with_attempts %}
                     <tr>
                         <td class="text-center">{{ quiz.category_name }}</td>
+                        <td class="text-center">{{ quiz.description }}</td> 
                         <td class="text-center">{{ quiz.score }}</td>
                         <td class="text-center">{{ quiz.num_attempts }}</td>
                     </tr>
@@ -84,3 +86,5 @@
 <div class="text-center h3" style="margin-top: 70px;">Please log in to access the quiz.</div>
 {% endif %}
 {% endblock %}
+
+
