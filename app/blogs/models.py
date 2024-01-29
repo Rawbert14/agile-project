@@ -24,6 +24,7 @@ class Blog(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     short_description =models.TextField(max_length=500)
+    description = models.TextField(blank=True, null=True)
     blog_body = models.TextField(max_length=5000)
     status = models.CharField(max_length=20, choices= STATUS_CHOICES, default='Draft')
     created_at = models.DateTimeField(auto_now_add=True)

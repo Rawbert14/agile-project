@@ -5,19 +5,18 @@
 {% block content %}
 
 <div class="container mt-5" style="margin-top: 70px;">
-    <!-- Single Column Layout for Cards -->
     <div class="col-md-12" style="margin-top: 70px;">
-        <!-- Information Card -->
         <div class="mb-4">
             <div class="card">
                 <div class="card-header">Information</div>
                 <div class="card-body">
-                    <p class="card-text">This section can contain general information about reporting, guidelines, or any other relevant data.</p>
+                    <p class="card-text">This page features a dedicated area for users to record tasks they have undertaken across various projects. It is important to fill in the "Plan" and "Execution" fields with integer values, which denote the planned duration (in minutes) for a task and the actual time (also in minutes) spent on its completion. Beneath this segment, you'll find a table listing all the tasks that have been documented for this project. In this section, tasks can be modified, removed, or associated with an issue (detailing reasons for any delays). Please note that the breakdown should also specify the time, in minutes, spent addressing the problem.</p>
+                    <p>If you have any questions or require further clarification on the available features, or if you happen to identify any issues that warrant attention, we invite you to connect with the owners. Your input is valuable to us, and we encourage you to share your insights and suggestions for potential improvements. Please don't hesitate to contact the owners at <a href="mailto:2549168@student.gla.ac.uk">2549168@student.gla.ac.uk</a>, and we will be more than happy to address any inquiries or feedback you may have.</p>
+
                 </div>
             </div>
         </div>
 
-        <!-- Report Submission Form Card -->
         <div class="mb-4">
             <div class="card">
                 <div class="card-header">Submit Report</div>
@@ -45,7 +44,8 @@
                                 <th scope="col">Sprint</th>
                                 <th scope="col">Plan</th>
                                 <th scope="col">Executed</th>
-                                <th scope="col">Create Problems</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Problems</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -58,6 +58,7 @@
                                 <td>{{ obj.product }}</td>
                                 <td>{{ obj.plan }}</td>
                                 <td>{{ obj.execution }}</td>
+                                <td>{{ obj.description }}</td>
                                 <td>
                                     <button class="btn btn-warning open-modal" data-toggle="modal" data-target="#problemModal" data-id="{{ obj.id }}">
                                         <i class="fa fa-exclamation-circle"></i>

@@ -24,8 +24,6 @@ def random_code():
 hours = ([(str(x), str(x)) for x in range(1,25)])
 
 
-
-
 class ReportQueryset(models.QuerySet):
     def get_by_line_and_day(self, day, line_id):
         return self.filter(day=day, production_line__id=line_id)
@@ -59,12 +57,14 @@ class ProblemReportedManager(models.Manager):
 
 class Report(models.Model):
     day = models.DateField(default=timezone.now)
+    
     start_hour = models.TimeField()  
     end_hour = models.TimeField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     plan = models.PositiveIntegerField()
     execution = models.PositiveIntegerField()
+    description = models.TextField(null=True, blank=True)
     production_line = models.ForeignKey(ProductionLine, on_delete=models.CASCADE)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)

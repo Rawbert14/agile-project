@@ -9,14 +9,13 @@
             <div class="card-body">
                 <h3 class="card-title text-center">{{ quiz_title }}</h3>
                 <form @submit.prevent="submitQuiz">
-                    <!-- Loop through questions -->
+                    
                     <div v-for="question in questions" :key="question.uid" class="mt-4">
                         <div class="card">
                             <div class="card-body">
                                 <p class="card-text">[[question.question]]</p>
-                                <!-- Loop through answers -->
+                                
                                 <div class="form-check" v-for="(answer, index) in question.answers" :key="index">
-                                    <!-- Radio button for selecting an answer -->
                                     <input
                                         v-model="userAnswers[question.uid]"
                                         :value="answer.answer"
@@ -41,22 +40,21 @@
         <div class='' style="margin-top: 30px;">
         </div>
 
-<!-- Results display -->
 <div v-if="quizSubmitted" class="container mt-5 pt-5">
-    <div class="col-lg-12 mx-auto"> <!-- Changed to col-lg-12 to use full width on large screens -->
+    <div class="col-lg-12 mx-auto"> 
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title text-center">Quiz Results</h3>
-                <div v-for="(answer, questionUid) in userAnswers" :key="questionUid" class="mb-3"> <!-- Added bottom margin -->
-                    <p class="mb-1">Question: [[questionsMap[questionUid].question]]</p> <!-- Reduced bottom margin -->
-                    <p class="mb-1">Your Answer: [[answer]]</p> <!-- Reduced bottom margin -->
+                <div v-for="(answer, questionUid) in userAnswers" :key="questionUid" class="mb-3"> 
+                    <p class="mb-1">Question: [[questionsMap[questionUid].question]]</p> 
+                    <p class="mb-1">Your Answer: [[answer]]</p> 
                     <p v-if="answer === questionsMap[questionUid].correct_answer" class="text-success">Correct</p>
                     <p v-else class="text-danger">Incorrect</p>
                 </div>
-                <h4 class="text-center">You scored [[obtainedMarks]] out of [[totalMarks]]</h4> <!-- Made score larger -->
-                <h4 class="text-center">That's [[(obtainedMarks / totalMarks * 100).toFixed(2)]]%</h4> <!-- Made percentage larger -->
+                <h4 class="text-center">You scored [[obtainedMarks]] out of [[totalMarks]]</h4> 
+                <h4 class="text-center">That's [[(obtainedMarks / totalMarks * 100).toFixed(2)]]%</h4> 
                 <div class="mt-4 text-center">
-                    <a href="{% url 'quiz:quiz_home' %}" class="btn btn-primary btn-lg">Go back to Quiz area</a> <!-- Made button larger -->
+                    <a href="{% url 'quiz:quiz_home' %}" class="btn btn-primary btn-lg">Go back to Quiz area</a> 
                 </div>
             </div>
         </div>
@@ -111,22 +109,19 @@
             sendScoreToServer() {
                 const percentageScore = (this.obtainedMarks / this.totalMarks) * 100;
                 const payload = {
-                    quiz_id: this.category, // Assuming this is the quiz ID
+                    quiz_id: this.category, 
                     score: percentageScore.toFixed(2),
-                    // any other data you need to send
                 };
                 fetch('/quiz/submit_score/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        // Include CSRF token if needed
                     },
                     body: JSON.stringify(payload),
                 })
                 .then(response => response.json())
                 .then(data => {
                     console.log('Score submitted successfully');
-                    // Update UI or state as needed
                 })
                 .catch(error => {
                     console.error('Error submitting score:', error);

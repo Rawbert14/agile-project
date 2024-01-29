@@ -10,6 +10,16 @@
 {% block content %} 
 
 <div class = "container bg-white py-2 rounded" style="margin-top: 70px;">
+    <div class="mb-4">
+        <div class="card">
+            <div class="card-header">Information</div>
+            <div class="card-body">
+                <p class="card-text">In the "Plan" section, you'll find the total minutes of work anticipated for the day, whereas the "Execution" section shows the actual minutes spent working. The difference is then calculated; a negative value indicates time saved compared to the initial estimate, which is favorable. Conversely, a positive difference suggests the opposite. Additionally, there's a section below that lists logged issues, providing insight into who encountered problems and what those problems were, as these factors could influence the time calculations.</p>
+                <p>If you have any questions or require further clarification on the available features, or if you happen to identify any issues that warrant attention, we invite you to connect with the owners. Your input is valuable to us, and we encourage you to share your insights and suggestions for potential improvements. Please don't hesitate to contact the owners at <a href="mailto:2549168@student.gla.ac.uk">2549168@student.gla.ac.uk</a>, and we will be more than happy to address any inquiries or feedback you may have.</p>
+
+            </div>
+        </div>
+    </div>
 <div class="col-12">
     <div class="text-muted h2">  
         <i class="fa-solid fa-chart-line mr-3"></i> Results
@@ -54,15 +64,21 @@ Summary of: <strong> {{day}} - {{line}} </strong>
 </table>
 
 <br>
-<h3>Problems</h3>
-<hr>
+<h3 class="mt-5 mb-3">Reported Problems</h3>
+
 {% for problem in problems_reported %}
-<hr><small class="text-muted">{{problem.problem_id}}</small><br>
-{{problem.category}}<br>
-{{problem.description}}<br>
-{{problem.breakdown}} minutes <br>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ problem.category }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ problem.user }}</h6>
+            <p class="card-text">{{ problem.description }}</p>
+            <div class="text-muted"><small>{{ problem.breakdown }} minutes spent</small></div>
+        </div>
+    </div>
+{% empty %}
+    <p class="text-muted">No problems reported yet.</p>
 {% endfor %}
-</hr>
+
 
 </div>
 

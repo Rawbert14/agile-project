@@ -13,4 +13,3 @@ urlpatterns = [
     
 ]
 
-#/{{obj.production_line}}/{{obj.pk}}/update/

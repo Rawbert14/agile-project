@@ -45,31 +45,24 @@ def get_quiz(request):
     except Exception as e:
         return HttpResponse("Something went wrong", status=500)
 
-@csrf_exempt  # Only if CSRF is handled on the frontend
+@csrf_exempt  
 @require_POST
 @login_required
 def submit_score(request):
     try:
         data = json.loads(request.body)
-        print("Received data:", data)  # Debugging print statement
+        print("Received data:", data)  
 
-        # Validate data
         quiz_id = data.get('quiz_id')
         score = float(data.get('score'))
         
         quiz_name = data.get('quiz_id')
         quiz = Category.objects.get(category_name=quiz_name)
 
-
-
-
         if quiz_id is None or score is None:
             return JsonResponse({'status': 'error', 'message': 'Missing data'}, status=400)
 
-        # Fetch the quiz based on the quiz_id
-        #quiz = Category.objects.get(pk=quiz_id)
-
-        # Create a QuizScore entry
+       
         QuizScore.objects.create(
             user=request.user,
             quiz=quiz,
@@ -85,6 +78,6 @@ def submit_score(request):
         return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
 
     except Exception as e:
-        print(f"Error: {str(e)}")  # Log the error for debugging
+        print(f"Error: {str(e)}")  
         return JsonResponse({'status': 'error', 'message': 'An error occurred'}, status=500)
 

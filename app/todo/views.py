@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from todo.models import Task
 from django.contrib.auth.models import User
-from django.contrib import messages  # Import messages
+from django.contrib import messages  
 
 from django.core.exceptions import ValidationError
 from django.utils.dateparse import parse_date
@@ -20,7 +20,6 @@ def addTask(request):
         assigned_to = User.objects.get(id=assigned_to_user) if assigned_to_user else None
         deadline_text = request.POST.get('deadline')
 
-        # Check if deadline_text is a valid date
         deadline = None
         if deadline_text:
             try:
@@ -30,16 +29,11 @@ def addTask(request):
             except ValidationError as e:
                 messages.error(request, str(e))
                 return redirect('todo')
-
-        # Inside your addTask view
         urgency = request.POST.get('urgency', Task.LOW)
         Task.objects.create(task=task_text, urgency=urgency, deadline=deadline, created_by=request.user, assigned_to=assigned_to)
         messages.success(request, "Task added successfully.")
         
     return redirect('todo')
-
-
-
 
 
 @login_required
@@ -81,17 +75,14 @@ def edit_task(request, pk):
 
             task.task = task_text
             task.assigned_to = assigned_to
-            # In your edit_task view
             deadline = request.POST.get('deadline')
             task.deadline = deadline if deadline else None
-            # Inside your edit_task view
             task.urgency = request.POST.get('urgency', Task.LOW)
             task.save()
 
 
             return redirect('todo')
         except ValidationError as e:
-            # Handle validation errors
             context = {'task': task, 'error': e.message}
             return render(request, 'edit_task.html', context)
 

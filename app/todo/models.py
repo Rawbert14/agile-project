@@ -29,7 +29,6 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # User fields
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='created_tasks',

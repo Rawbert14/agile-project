@@ -21,16 +21,16 @@ $(document).ready(function(){
 <div class="container">
     <div class="card">
         <div class="card-body">
-<p>  Provided below is a tool designed primarily for team managers, aiding them in identifying issues pertaining to specific production lines or projects. At the conclusion of each day, managers can select a project and access its detailed report. This report encompasses every logged task, the time invested in each task, and an assessment of whether the overall work for the day exceeded the expected duration. This information helps pinpoint potential problems related to task descriptions, estimations, or employee-related challenges, necessitating guidance.</p>
+<p>  Provided below is a tool designed primarily for team management, aiding them in identifying issues pertaining to specific production lines or projects. At the conclusion of each day, managers can select a project and access its detailed report. This report encompasses every logged task, the time invested in each task, and an assessment of whether the overall work for the day exceeded the expected duration. This information helps pinpoint potential problems related to task descriptions, estimations, or employee-related challenges, necessitating guidance.</p>
 <p> Notably, this analysis can be performed retrospectively for any past day, allowing for a comprehensive historical assessment. The tool generates a succinct output categorizing projects as either 'Doing ok' for smoothly progressing endeavors or 'Not Doing ok' for projects encountering developmental issues. Additionally, in the lower section, any problems logged by employees during their workday are highlighted for managerial attention.</p>
-<p>For further inquiries, clarifications, or to explore the tool's functionalities in more detail, feel free to reach out to us at 2549168@student.gla.ac.uk. We value your input and are open to any feedback or suggestions you may have.</p>
-        </div>
+<p>If you have any questions or require further clarification on the available features, or if you happen to identify any issues that warrant attention, we invite you to connect with the owners. Your input is valuable to us, and we encourage you to share your insights and suggestions for potential improvements. Please don't hesitate to contact the owners at <a href="mailto:2549168@student.gla.ac.uk">2549168@student.gla.ac.uk</a>, and we will be more than happy to address any inquiries or feedback you may have.</p>
+</div>
     </div>
 </div>
 
 <div class="col-9 mx-auto" style="margin-top: 35px;">
     <div class="bg-white p-4 rounded">
-    <div class="text-black text-center h3 m-5">Do your choices! Select a project and a day to see its report!</div>
+    <div class="text-black text-center h3 m-5">Select a project and a day to see its report!</div>
     <form action="" method="POST">
         {% csrf_token %}
         {{ form|crispy }}

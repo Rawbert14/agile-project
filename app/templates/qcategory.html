@@ -6,8 +6,11 @@
 <div class="container mt-5 pt-5">
     <div class="card">
         <div class="card-body">
-            <!-- Introductory text, similar to the model -->
-            <p>Welcome to the Quiz Area. Here you can select a quiz category and test your knowledge. Choose a category and start the quiz to see how well you perform.</p>
+            <p>Welcome to the Quiz Area, where you can engage with various quizzes to assess your knowledge. Begin by selecting a category that interests you and start the quiz to evaluate your performance. 
+
+                Below, you will find a table displaying your statistics, including the number of attempts you've made and the highest grade you've achieved. Additionally, the table will highlight quizzes you haven't yet attempted, encouraging you to try and achieve the highest grade possible. Please note that these quizzes often correlate with topics covered in our learning blog articles, providing a practical application of the knowledge you've gained.</p>
+                <p>If you have any questions or require further clarification on the available features, or if you happen to identify any issues that warrant attention, we invite you to connect with the owners. Your input is valuable to us, and we encourage you to share your insights and suggestions for potential improvements. Please don't hesitate to contact the owners at <a href="mailto:2549168@student.gla.ac.uk">2549168@student.gla.ac.uk</a>, and we will be more than happy to address any inquiries or feedback you may have.</p>
+
         </div>
     </div>
 
@@ -15,7 +18,6 @@
         <div class="card-body">
             <h3 class="text-center">Select Testing Quiz Category</h3>
 
-            <!-- Form for selecting Quiz Category -->
             <div class="row mt-3">
                 <div class="col-md-6 col-lg-6 mx-auto">
                     <form id="quizForm" action="{% url 'quiz:quiz' %}" method='get'>
@@ -76,7 +78,7 @@
     document.getElementById('quizForm').addEventListener('submit', function(event) {
         var categorySelect = document.getElementById('categorySelect');
         if (categorySelect.value === '') {
-            event.preventDefault(); // Prevent form submission
+            event.preventDefault(); 
             alert('Please select a category to start the quiz.');
         }
     });
