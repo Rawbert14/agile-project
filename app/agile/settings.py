@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -68,7 +70,7 @@ EMAIL_USE_TLS = True  # Enable TLS (Transport Layer Security)
 EMAIL_HOST_USER = 'andercorobert@gmail.com'  # Your Gmail address
 EMAIL_HOST_PASSWORD = 'bauf tnfu ucmw vwqb'  # Your Gmail password or app-specific password
 
-ALLOWED_HOSTS = ['.vercel.app','test.com','localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*','.vercel.app','test.com','localhost', '127.0.0.1']
 
 SITE_ID = 1
 
@@ -203,3 +205,11 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static", "static_cdn", "s
 MEDIA_URL = '/media/'
 #MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
 MEDIA_ROOT = BASE_DIR /'media'
+
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+
+django_heroku.settings(locals())
