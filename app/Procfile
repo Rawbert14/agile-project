@@ -1,1 +1,0 @@
-web gunicorn agile.wsgi:application --log-file -
