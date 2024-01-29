@@ -39,35 +39,38 @@
         </div>
     </div>
 
-    <div class="card mt-4">
-        <div class="card-body">
-            <h3 class="text-center">Your Quiz Performance</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="text-center">Quiz Name</th>
-                        <th class="text-center">Description/Guidance</th>
-                        <th class="text-center">Score in % out of 100</th>
-                        <th class="text-center">Number of Attempts</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for quiz in quizzes_with_attempts %}
-                    <tr>
-                        <td class="text-center">{{ quiz.category_name }}</td>
-                        <td class="text-center">{{ quiz.description }}</td> 
-                        <td class="text-center">{{ quiz.score }}</td>
-                        <td class="text-center">{{ quiz.num_attempts }}</td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="3" class="text-center">No quizzes taken yet.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <div class="mb-4">
+        <div class="card" style = 'margin-top: 20px;'>
+            <div class="card-header">Your Quiz Performance</div>
+            <div class="card-body overflow-auto">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr class="text-center">
+                            <th scope="col">Quiz Name</th>
+                            <th scope="col">Description/Guidance</th>
+                            <th scope="col">Score in % out of 100</th>
+                            <th scope="col">Number of Attempts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for quiz in quizzes_with_attempts %}
+                        <tr class="text-center">
+                            <td>{{ quiz.category_name }}</td>
+                            <td>{{ quiz.description }}</td> 
+                            <td>{{ quiz.score }}</td>
+                            <td>{{ quiz.num_attempts }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">No quizzes taken yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+    
     
 
 </div>

@@ -39,7 +39,7 @@
                         <div class="card-body">
                             <h3><a href="{% url 'blogs' blog_post.slug %}" class="text-dark">{{ blog_post.title }}</a></h3>
                             <small class="mb-1 text-muted">{{ blog_post.created_at | timesince }} ago | {{ blog_post.author }}</small>
-                            <p class="card-text">{{ blog_post.short_description }}</p>
+                            <p class="card-text">{{ blog_post.short_description | truncatewords:35 }}</p>
                         </div>
                     </div>
                 </div>

@@ -19,6 +19,13 @@
     #comments{
         cursor: pointer
     }
+
+    .btn-custom {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+       
+    }
+    
     </style>
 
 <div class="col-9 mx-auto" style="margin-top: 70px;">
@@ -85,8 +92,8 @@
             {% if not object.report and object.author.user == request.user %}
             <div class="col-2 my-3">
                 <a href="{% url 'posts:gp-delete' object.pk %}">
-                    <button class="btn btn-danger h-100 ml-2">
-                        <i class="fas fa-times"> Delete</i>
+                    <button class="btn btn-danger btn-custom">
+                        <i class="fas fa-times mr-2"> Delete</i>
                     </button>
                 </a>
             </div>
