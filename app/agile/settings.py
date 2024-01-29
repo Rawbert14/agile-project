@@ -25,7 +25,6 @@ SECRET_KEY = "django-insecure-y-(=2n$t1pk%8_06o)%n+^zh71jmzw8&4w@tyw%ow%&d)*+u+)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -69,7 +68,7 @@ EMAIL_USE_TLS = True  # Enable TLS (Transport Layer Security)
 EMAIL_HOST_USER = 'andercorobert@gmail.com'  # Your Gmail address
 EMAIL_HOST_PASSWORD = 'bauf tnfu ucmw vwqb'  # Your Gmail password or app-specific password
 
-ALLOWED_HOSTS = ['test.com','localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.vercel.app','test.com','localhost', '127.0.0.1']
 
 SITE_ID = 1
 
