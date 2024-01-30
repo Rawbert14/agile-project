@@ -14,6 +14,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <p class="card-text">[[question.question]]</p>
+                                <p class="points">This question worth [[question.marks]] points</p>
                                 
                                 <div class="form-check" v-for="(answer, index) in question.answers" :key="index">
                                     <input
