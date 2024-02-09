@@ -273,7 +273,9 @@
                     <div class="col-md-6 col-lg-6 mx-auto">
                         <form action="{% url 'addTask' %}" method='POST'>
                             {% csrf_token %}
+                            
                             <div class="input-group mb-3">
+                                
                                 <input type="text" name='task' class="form-control" placeholder="Add a task">
                             </div>
                             <div class="mb-3">
@@ -284,9 +286,11 @@
                                     {% endfor %}
                                 </select>
                             </div>
+                            <p>Deadline</p>
                             <div class="mb-3">
                                 <input type="date" name="deadline" class="form-control" placeholder="Deadline">
                             </div>
+                            <p>Urgency</p>
                             <div class="mb-3">
                                 <select name="urgency" class="form-control">
                                     <option value="L">Low</option>
@@ -294,6 +298,7 @@
                                     <option value="H">High</option>
                                 </select>
                             </div>
+                            <p>Details</p>
                             <div class="mb-3">
                                 <textarea name="description" class="form-control" placeholder="Task description"></textarea>
                             </div>
