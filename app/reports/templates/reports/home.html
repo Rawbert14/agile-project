@@ -35,6 +35,28 @@
 
 </form>
 
+
+
+{% for line in production_lines %}
+<div class="card mb-4" style='margin-top: 10px;'>
+    <div class="card-header">
+        {{ line.name }}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Team Leader: {{ line.team_leader }}</h5>
+        <p class="card-text">
+            <strong>Sprints:</strong>
+            {% for product in line.products.all %}
+                {{ product.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p class="card-text">Description: {{ line.description }}</p>
+    </div>
+</div>
+{% endfor %}
+
+
+
 {% else %}
 <div class = "text-white text-center h3"> Please log in! </div>
 {% endif %}

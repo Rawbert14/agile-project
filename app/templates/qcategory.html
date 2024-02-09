@@ -39,6 +39,45 @@
         </div>
     </div>
 
+
+    <!-- Section for Active Categories -->
+    <div class="card mt-4">
+        <div class="card-body">
+            <h3 class="text-center">Quizes mandatory for new employees</h3>
+            <h5 class="text-center"> Passing grade is 80% </h5>
+            <div class="row mt-3">
+                {% for category in active_categories %}
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                            <div class="card-header">{{ category.category_name }}</div>
+                            <div class="card-body">
+                                <p>{{ category.description }}</p>
+                                <!-- You can add more category details here -->
+                                {% for quiz in quizzes_with_attempts %}
+    {% if quiz.category_name == category.category_name %}
+        <p>Your score: {{ quiz.score }}</p>
+        <p> Your number of attempts: {{ quiz.num_attempts }}</p>
+        {% if quiz.score <= 80 %}
+            <p style="color: red;">Try again until you get 100.</p>
+        {% else %}
+            <p style="color: green;">Well done, you passed this!</p>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No active categories available.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
     <div class="mb-4">
         <div class="card" style = 'margin-top: 20px;'>
             <div class="card-header">Your Quiz Performance</div>

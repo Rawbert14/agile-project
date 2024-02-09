@@ -10,14 +10,19 @@ from django.views.decorators.http import require_POST
 @login_required
 def home(request):
     categories = Category.objects.all()
+    active_categories = Category.objects.filter(is_onboarding=True)
+
     quizzes_with_attempts = Category.objects.annotate(
         num_attempts=Count('quizscore', filter=Q(quizscore__user=request.user)),
         score=Max('quizscore__score', filter=Q(quizscore__user=request.user)),
         last_attempt_date=Max('quizscore__date_taken', filter=Q(quizscore__user=request.user))
+        
+        
     )
     context = {
         'categories': categories,
-        'quizzes_with_attempts': quizzes_with_attempts
+        'quizzes_with_attempts': quizzes_with_attempts,
+        'active_categories': active_categories,
     }
     return render(request, 'qcategory.html', context)
 

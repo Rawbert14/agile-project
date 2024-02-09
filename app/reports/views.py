@@ -42,13 +42,11 @@ def main_report_summary(request):
     return render(request, 'reports/summary.html', context)
 
     
-
-
-
+    
 class HomeView(FormView):
     template_name = "reports/home.html"
     form_class = ReportSelectLineForm
-    
+
     def get_form_kwargs(self):
         kwargs = super(HomeView, self).get_form_kwargs()
         kwargs['user'] = self.request.user
@@ -57,6 +55,14 @@ class HomeView(FormView):
     def post(self, *args, **kwargs):
         prod_line = self.request.POST.get('prod_line')
         return redirect('reports:report-view', production_line=prod_line)
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in the production lines
+        context['production_lines'] = ProductionLine.objects.all().prefetch_related('products')
+        return context
+ 
         
         
 class SelectView(FormView):
@@ -138,3 +144,4 @@ def report_view(request, production_line):
     
     return render(request, 'reports/report.html', context)
     
+

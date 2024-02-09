@@ -2,6 +2,7 @@ from datetime import datetime
 import random
 from django.http import HttpResponse
 from django.shortcuts import render
+from areas.models import ProductionLine
 
 from blogs.models import Category, Blog
 from todo.models import Task
@@ -17,9 +18,12 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     categories = Category.objects.all()
     posts = Blog.objects.filter(status='Published').order_by('updated_at')
+    #print(production_lines)
+
     context = {
         'categories': categories,
         'posts': posts,
+
     }
     return render(request, 'home.html', context)
 
