@@ -45,6 +45,15 @@
         <option value="H" {% if task.urgency == 'H' %}selected{% endif %}>High</option>
     </select>
 </div>
+<!-- Description field -->
+<div class="mb-3">
+    <textarea name="description" class="form-control" placeholder="Task description">{{ task.description }}</textarea>
+</div>
+
+<!-- Expected Time field -->
+<div class="mb-3">
+    <input type="number" name="expected_time" class="form-control" placeholder="Expected time in minutes" value="{{ task.expected_time }}">
+</div>
 
 
                 </form>

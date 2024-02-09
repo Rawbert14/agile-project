@@ -20,6 +20,8 @@
     <div class="card mt-4">
         <div class="card-body">
             <h3 class="text-center">Tasks Assigned to Me</h3>
+            <p class="text-center">Total Expected Time: <strong>{{ total_expected_time }} minutes</strong></p>
+
             <div class="row">
                 <!-- Low Urgency Tasks -->
                 <div class="col-md-4 text-center">
@@ -32,6 +34,9 @@
                                         {{ task.task }}
                                         <div class="mt-2">
                                             <small>Created by: {{ task.created_by.username }}</small>
+                                            <div><small>Description: {{ task.description }}</small></div>
+                                            <div><small>Expected Time: {{ task.expected_time }} minutes</small></div>
+
                                             <div><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></div>
                                             {% if task.deadline and task.deadline < today %}
                                                 <span class="text-danger">(Past Deadline)</span>
@@ -71,6 +76,9 @@
                                         {{ task.task }}
                                         <div class="mt-2">
                                             <small>Created by: {{ task.created_by.username }}</small>
+                                            <div><small>Description: {{ task.description }}</small></div>
+<div><small>Expected Time: {{ task.expected_time }} minutes</small></div>
+
                                             <div><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></div>
                                             {% if task.deadline and task.deadline < today %}
                                                 <span class="text-danger">(Past Deadline)</span>
@@ -110,6 +118,9 @@
                                         {{ task.task }}
                                         <div class="mt-2">
                                             <small>Created by: {{ task.created_by.username }}</small>
+                                            <div><small>Description: {{ task.description }}</small></div>
+<div><small>Expected Time: {{ task.expected_time }} minutes</small></div>
+
                                             <div><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></div>
                                             {% if task.deadline and task.deadline < today %}
                                                 <span class="text-danger">(Past Deadline)</span>
@@ -157,6 +168,9 @@
                                 {{ task.task }}
                                 <div class="mt-2">
                                 <small>Created by: {{ task.created_by.username }}</small>
+                                <div><small>Description: {{ task.description }}</small></div>
+<div><small>Expected Time: {{ task.expected_time }} minutes</small></div>
+
                                 {% if task.assigned_to %}
                         <br><small>Assigned to: {{ task.assigned_to.username }}</small>
                         <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
@@ -188,6 +202,9 @@
                                 {{ task.task }}
                                 <div class="mt-2">
                                 <small>Moved to In Progress by: {{ task.in_progress_by.username }}</small>
+                                <div><small>Description: {{ task.description }}</small></div>
+<div><small>Expected Time: {{ task.expected_time }} minutes</small></div>
+
                                 {% if task.assigned_to %}
                         <br><small>Assigned to: {{ task.assigned_to.username }}</small>
                         <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
@@ -217,6 +234,9 @@
                                 {{ task.task }}
                                 <div class="mt-2">
                                 <small>Marked as Done by: {{ task.done_by.username }}</small>
+                                <div><small>Description: {{ task.description }}</small></div>
+<div><small>Expected Time: {{ task.expected_time }} minutes</small></div>
+
                                 {% if task.assigned_to %}
                         <br><small>Assigned to: {{ task.assigned_to.username }}</small>
                         <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
@@ -274,6 +294,14 @@
                                     <option value="H">High</option>
                                 </select>
                             </div>
+                            <div class="mb-3">
+                                <textarea name="description" class="form-control" placeholder="Task description"></textarea>
+                            </div>
+                        
+                            <div class="mb-3">
+                                <input type="number" name="expected_time" class="form-control" placeholder="Expected time in minutes">
+                            </div>
+
                             <button type='submit' class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
                         </form>
                     </div>
@@ -282,10 +310,6 @@
         </div>
     </div>
     
-
-
-
-
 </div>
 
 <div class="card" style="margin-top: 70px;">

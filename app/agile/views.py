@@ -11,6 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
 from collections import defaultdict
+from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     categories = Category.objects.all()
@@ -30,6 +32,11 @@ def todo(request):
     users = User.objects.all() 
     today = timezone.localdate()
     five_days_later = today + timedelta(days=5)
+    # Calculate total expected time for tasks assigned to the current user
+    total_expected_time = Task.objects.filter(assigned_to=request.user).aggregate(Sum('expected_time'))['expected_time__sum'] or 0
+
+    # Other context data
+    tasks = Task.objects.filter(assigned_to=request.user)
     
     # Get tasks assigned to the logged-in user
     assigned_tasks = Task.objects.filter(assigned_to=request.user).order_by('-updated_at')
@@ -42,6 +49,7 @@ def todo(request):
         'users': users,
         'today': today,
         'five_days_later': five_days_later,
+        'total_expected_time': total_expected_time,
     }
     return render(request, 'todo.html', context)
 
