@@ -1,3 +1,5 @@
+from datetime import datetime
+import random
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -8,6 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
+from collections import defaultdict
 
 def home(request):
     categories = Category.objects.all()
@@ -46,12 +49,43 @@ def todo(request):
 def help(request):
     return render(request, 'help.html')
 
-def team(request):
+def team1(request):
     members = Profile.objects.all()
     context = {
         'members': members,
     }
     return render(request, 'team.html', context)
+
+
+@login_required
+def team(request):
+    # Get the current user's profile
+    user_profile = request.user.profile
+    members = Profile.objects.all()
+    # Get the current week number
+    current_week = datetime.now().isocalendar().week
+
+    # Create a unique seed for each user by combining user ID and current week number
+    seed = str(request.user.id) + str(current_week)
+    
+    # Use the combined seed for the random number generator
+    random.seed(seed)
+
+    # Exclude the current user from the queryset
+    teammates = Profile.objects.filter(team=user_profile.team).exclude(user=request.user)
+
+    buddy = None
+    if teammates.exists():
+        buddy = random.choice(teammates)
+
+    context = {
+        'buddy': buddy,
+        'members': members,
+        # ... include other context variables you might need
+    }
+
+    return render(request, 'team.html', context)
+
 
 def social(request):
     return render(request, 'social.html')
