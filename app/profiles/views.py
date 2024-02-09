@@ -14,16 +14,12 @@ def profile_view(request):
     
     if request.method == 'POST':
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.bio = form.cleaned_data.get('bio')
-            instance.team = form.cleaned_data.get('team')
-            instance.profile_picture = form.cleaned_data.get('profile_picture')
-            form.save()
-            
+            form.save()  # This saves all the form fields to the model instance
+            # Redirect or display a success message here if needed
+    
     context = {
         'object': profile,
         'form': form
     }
     
     return render(request, 'profiles/profile.html', context)
-        
