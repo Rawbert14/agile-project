@@ -4,8 +4,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import Blog, Category
 from django.db.models import Q
 
-
-
 def posts_by_category(request, category_id):
     posts = Blog.objects.filter(status='Published', category=category_id)
        
@@ -24,3 +22,6 @@ def blogs(request, slug):
         'single_blog': single_blog,
     }
     return render(request, 'blogs.html', context)
+
+
+

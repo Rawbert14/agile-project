@@ -38,3 +38,23 @@ class ProductModelTest(TestCase):
     def test_str_method(self):
         product = Product.objects.get(id=1)
         self.assertEqual(str(product), 'Test Product')
+        
+
+    def setUp(self):
+        # Create a Product instance to use in tests
+        self.product = Product.objects.create(
+            name='Test Product',
+            description='Test Description',
+            short_code='TP001'
+        )
+
+    def test_product_creation(self):
+        # Test that the Product instance was created properly
+        self.assertEqual(self.product.name, 'Test Product')
+        self.assertEqual(self.product.description, 'Test Description')
+        self.assertEqual(self.product.short_code, 'TP001')
+
+    def test_product_string_representation(self):
+        # Test the string representation of the Product model
+        self.assertEqual(str(self.product), 'Test Product')
+

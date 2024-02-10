@@ -39,7 +39,6 @@ def todo(request):
     # Calculate total expected time for tasks assigned to the current user
     total_expected_time = Task.objects.filter(assigned_to=request.user).aggregate(Sum('expected_time'))['expected_time__sum'] or 0
 
-    # Other context data
     tasks = Task.objects.filter(assigned_to=request.user)
     
     # Get tasks assigned to the logged-in user
@@ -99,8 +98,6 @@ def team(request):
     }
 
     return render(request, 'team.html', context)
-
-
 
 
 def social(request):
