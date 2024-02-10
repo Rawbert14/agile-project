@@ -71,32 +71,36 @@ def team1(request):
 
 @login_required
 def team(request):
-    # Get the current user's profile
-    user_profile = request.user.profile
-    members = Profile.objects.all()
     # Get the current week number
     current_week = datetime.now().isocalendar().week
 
-    # Create a unique seed for each user by combining user ID and current week number
-    seed = str(request.user.id) + str(current_week)
-    
-    # Use the combined seed for the random number generator
+    # Create a seed for the random number generator using the current week number
+    seed = str(current_week)
     random.seed(seed)
 
-    # Exclude the current user from the queryset
-    teammates = Profile.objects.filter(team=user_profile.team).exclude(user=request.user)
+    # Queryset excluding the current user to get the list of possible teammates
+    teammates = Profile.objects.exclude(user=request.user)
 
     buddy = None
+    # Check if there are any teammates
     if teammates.exists():
-        buddy = random.choice(teammates)
+        # Get the count of teammates
+        teammates_count = teammates.count()
+
+        # Generate a random index from 0 to teammates_count - 1
+        random_index = random.randint(0, teammates_count - 1)
+
+        # Select the buddy using the random index
+        buddy = teammates[random_index]
 
     context = {
         'buddy': buddy,
-        'members': members,
-        # ... include other context variables you might need
+        'members': teammates, 
     }
 
     return render(request, 'team.html', context)
+
+
 
 
 def social(request):
