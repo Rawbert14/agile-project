@@ -15,6 +15,7 @@ class CategoryModelTests(TestCase):
         category = Category.objects.get(category_name="Tech")
         self.assertEqual(str(category), "Tech")
 
+
 class BlogModelTests(TestCase):
 
     @classmethod
