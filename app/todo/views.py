@@ -65,6 +65,7 @@ def addTask(request):
     return redirect('todo')
 
 
+
 @login_required
 def mark_as_done(request, pk):
     task = get_object_or_404(Task, pk=pk)

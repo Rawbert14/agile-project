@@ -67,11 +67,8 @@ class Task(models.Model):
         default=LOW,
     )
     
-    description = models.TextField(null=True, blank=True)  # Allows for a detailed description of the task
-    expected_time = models.IntegerField(help_text='Expected time in minutes', default=0)  # Stores the expected time in minutes
-
-
-    
+    description = models.TextField(null=True, blank=True)  
+    expected_time = models.IntegerField(help_text='Expected time in minutes', default=0) 
 
     def __str__(self):
         return self.task
