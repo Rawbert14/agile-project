@@ -142,3 +142,7 @@ def mark_as_done_from_in_progress(request, pk):
     task.done_by = request.user
     task.save()
     return redirect('todo')
+
+
+
+

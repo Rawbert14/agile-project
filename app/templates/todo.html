@@ -158,43 +158,45 @@
         <div class="card-body">
             <h3 class="text-center">ToDo Section</h3>
             <div class="row">
-               <!-- Tasks to be done -->
-<div class="col-md-4">
-    <h4>Tasks to be done</h4>
-    <div class="overflow-auto" style="max-height: 450px;">
-        {% for task in tasks %}
-            {% if task.status == 'TD' %}  
-                <div class="card mb-1">
-                    <div class="card-body">
-                        {{ task.task }}
-                        <div class="mt-2">
-                            <small>Created by: {{ task.created_by.username }}</small>
-                            <div><small>Description: {{ task.description }}</small></div>
-                            <div><small>Expected Time: {{ task.expected_time }} minutes</small></div>
+                <!-- Tasks to be done -->
+                <div class="col-md-4">
+                    <h4>Tasks to be done</h4>
+       <div class="overflow-auto" style="max-height: 450px;">
+           {% for task in tasks %}
+               {% if task.status == 'TD' %}  
+                   <div class="card mb-1">
+                       <div class="card-body">
+                           {{ task.task }}
+                           <div class="mt-2">
+                               <small>Created by: {{ task.created_by.username }}</small>
+                               <div><small>Description: {{ task.description }}</small></div>
+                               <div><small>Expected Time: {{ task.expected_time }} minutes</small></div>
+   
+                               {% if task.assigned_to %}
+                                   <br><small>Assigned to: {{ task.assigned_to.username }}</small>
+                                   <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
+                                   <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
+                               {% else %}
+                                   <br><small>Assigned to: Not assigned</small>
+                                   <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
+                                   <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
+                               {% endif %}
+                           </div>
+                           <span style="display: block; text-align: center;">
+                               <a href="{% url 'mark_as_in_progress' task.pk %}" class="btn btn-warning btn-sm"><i class="fa fa-forward"></i> In Progress</a>
+                               <a href="{% url 'edit_task' task.pk %}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                               <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                           </span>
+                       </div>
+                   </div>
+               {% endif %}
+           {% empty %}
+               <p>No tasks to be done.</p>
+           {% endfor %}
+       </div>
+   </div>
 
-                            {% if task.assigned_to %}
-                                <br><small>Assigned to: {{ task.assigned_to.username }}</small>
-                                <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
-                                <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
-                            {% else %}
-                                <br><small>Assigned to: Not assigned</small>
-                                <br><small>Deadline: {{ task.deadline|date:"Y-m-d" }}</small></br>
-                                <br><small>Urgency: {{ task.get_urgency_display }}</small></br>
-                            {% endif %}
-                        </div>
-                        <span style="display: block; text-align: center;">
-                            <a href="{% url 'mark_as_in_progress' task.pk %}" class="btn btn-warning btn-sm"><i class="fa fa-forward"></i> In Progress</a>
-                            <a href="{% url 'edit_task' task.pk %}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                            <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-                        </span>
-                    </div>
-                </div>
-            {% endif %}
-        {% empty %}
-            <p>No tasks to be done.</p>
-        {% endfor %}
-    </div>
-</div>
+   
 
                 <!-- In Progress Tasks -->
                 <div class="col-md-4">
