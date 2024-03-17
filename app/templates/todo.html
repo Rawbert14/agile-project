@@ -158,6 +158,7 @@
         <div class="card-body">
             <h3 class="text-center">ToDo Section</h3>
             <div class="row">
+
                 <!-- Tasks to be done -->
                 <div class="col-md-4">
                     <h4>Tasks to be done</h4>
@@ -275,6 +276,7 @@
         <div class="card">
             <div class="card-body">
                 <h3 class="text-center">Add New Task</h3>
+                <h5 class="text-center">After you create the task you will not be able to see it again until the person you assigned to is not updating its state!</h5>
                 <div class="row">
                     <div class="col-md-6 col-lg-6 mx-auto">
                         <form action="{% url 'addTask' %}" method='POST'>
@@ -282,23 +284,24 @@
                             
                             <div class="input-group mb-3">
                                 
-                                <input type="text" name='task' class="form-control" placeholder="Add a task">
+                                <input type="text" name='task' class="form-control" required placeholder="Add a task">
                             </div>
                             <div class="mb-3">
-                                <select name="assigned_to" class="form-control">
+                                <select name="assigned_to" class="form-control" required>
                                     <option value="">Assign to...</option>
                                     {% for user in users %}
                                     <option value="{{ user.id }}">{{ user.username }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
+                            
                             <p>Deadline</p>
                             <div class="mb-3">
-                                <input type="date" name="deadline" class="form-control" placeholder="Deadline">
+                                <input type="date" name="deadline" class="form-control" required placeholder="Deadline">
                             </div>
                             <p>Urgency</p>
                             <div class="mb-3">
-                                <select name="urgency" class="form-control">
+                                <select name="urgency" class="form-control" required>
                                     <option value="L">Low</option>
                                     <option value="M">Medium</option>
                                     <option value="H">High</option>
@@ -310,7 +313,7 @@
                             </div>
                         
                             <div class="mb-3">
-                                <input type="number" name="expected_time" class="form-control" placeholder="Expected time in minutes">
+                                <input type="number" name="expected_time" class="form-control" placeholder="Expected time in minutes" required>
                             </div>
 
                             <button type='submit' class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>

@@ -13,19 +13,12 @@ import os
 from pathlib import Path
 
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-y-(=2n$t1pk%8_06o)%n+^zh71jmzw8&4w@tyw%ow%&d)*+u+)"
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 
 
 # Application definition
@@ -37,17 +30,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    
-    
+
+
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    
+
     'crispy_forms',
     'crispy_bootstrap4',
-   
-    
+
+
     "profiles",
     "reports",
     "areas",
@@ -59,17 +52,17 @@ INSTALLED_APPS = [
     "quiz",
 ]
 
-# Set the email backend to SMTP
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # SMTP configuration for Gmail
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  # Port for TLS
 EMAIL_USE_TLS = True  # Enable TLS (Transport Layer Security)
-EMAIL_HOST_USER = 'andercorobert@gmail.com'  # Your Gmail address
-EMAIL_HOST_PASSWORD = 'bauf tnfu ucmw vwqb'  # Your Gmail password or app-specific password
+EMAIL_HOST_USER = 'andercorobert@gmail.com'  
+EMAIL_HOST_PASSWORD = 'bauf tnfu ucmw vwqb'
 
-ALLOWED_HOSTS = ['*','.vercel.app','test.com','localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*', '.vercel.app', 'test.com', 'localhost', '127.0.0.1']
 
 SITE_ID = 1
 
@@ -112,9 +105,9 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                
-                
-                
+
+
+
                 'profiles.context_processors.profile_pic',
                 'profiles.context_processors.get_profile',
                 'blogs.context_processors.get_categories',
@@ -131,8 +124,6 @@ AUTHENTICATION_BACKENDS = [
 WSGI_APPLICATION = "agile.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     "default": {
@@ -142,8 +133,6 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -177,7 +166,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL = "/admin/"
 
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -189,19 +177,18 @@ STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
+# STATICFILES_DIRS = [BASE_DIR / "static_project"]
 
-#STATICFILES_DIRS = [BASE_DIR / "static_project"]
-
-#STATIC_ROOT = BASE_DIR/'static'
+# STATIC_ROOT = BASE_DIR/'static'
 
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static", "static_cdn", "static_root")
+STATIC_ROOT = os.path.join(os.path.dirname(
+    BASE_DIR), "static", "static_cdn", "static_root")
 
 MEDIA_URL = '/media/'
-#MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
-MEDIA_ROOT = BASE_DIR /'media'
-
+# MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
+MEDIA_ROOT = BASE_DIR / 'media'

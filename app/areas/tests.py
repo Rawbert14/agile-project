@@ -1,6 +1,7 @@
 from django.test import TestCase
 from .models import ProductionLine
 
+
 class ProductionLineModelTest(TestCase):
 
     def test_production_line_name(self):

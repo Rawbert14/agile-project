@@ -15,10 +15,11 @@ from collections import defaultdict
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
 
+
 def home(request):
     categories = Category.objects.all()
     posts = Blog.objects.filter(status='Published').order_by('updated_at')
-    #print(production_lines)
+    # print(production_lines)
 
     context = {
         'categories': categories,
@@ -31,24 +32,28 @@ def home(request):
 @login_required
 def todo(request):
     tasks = Task.objects.filter(status=Task.TODO).order_by('-updated_at')
-    in_progress_tasks = Task.objects.filter(status=Task.IN_PROGRESS).order_by('-updated_at')
-    completed_tasks = Task.objects.filter(status=Task.DONE).order_by('-updated_at')
-    users = User.objects.all() 
+    in_progress_tasks = Task.objects.filter(
+        status=Task.IN_PROGRESS).order_by('-updated_at')
+    completed_tasks = Task.objects.filter(
+        status=Task.DONE).order_by('-updated_at')
+    users = User.objects.all()
     today = timezone.localdate()
     five_days_later = today + timedelta(days=5)
     # Calculate total expected time for tasks assigned to the current user
-    total_expected_time = Task.objects.filter(assigned_to=request.user).aggregate(Sum('expected_time'))['expected_time__sum'] or 0
+    total_expected_time = Task.objects.filter(assigned_to=request.user).aggregate(
+        Sum('expected_time'))['expected_time__sum'] or 0
 
     tasks = Task.objects.filter(assigned_to=request.user)
-    
+
     # Get tasks assigned to the logged-in user
-    assigned_tasks = Task.objects.filter(assigned_to=request.user).order_by('-updated_at')
+    assigned_tasks = Task.objects.filter(
+        assigned_to=request.user).order_by('-updated_at')
 
     context = {
         'tasks': tasks,
         'in_progress_tasks': in_progress_tasks,
         'completed_tasks': completed_tasks,
-        'assigned_tasks': assigned_tasks,  
+        'assigned_tasks': assigned_tasks,
         'users': users,
         'today': today,
         'five_days_later': five_days_later,
@@ -59,6 +64,7 @@ def todo(request):
 
 def help(request):
     return render(request, 'help.html')
+
 
 def team1(request):
     members = Profile.objects.all()
@@ -94,7 +100,7 @@ def team(request):
 
     context = {
         'buddy': buddy,
-        'members': teammates, 
+        'members': teammates,
     }
 
     return render(request, 'team.html', context)
@@ -102,6 +108,7 @@ def team(request):
 
 def social(request):
     return render(request, 'social.html')
+
 
 def policy(request):
     return render(request, 'policy.html')

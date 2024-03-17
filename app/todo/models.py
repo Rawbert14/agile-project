@@ -55,8 +55,7 @@ class Task(models.Model):
         settings.AUTH_USER_MODEL,
         related_name='assigned_tasks',
         on_delete=models.SET_NULL,
-        null=True,
-        blank=True
+        null=True
     )
     
     deadline = models.DateField(null=True, blank=True)
