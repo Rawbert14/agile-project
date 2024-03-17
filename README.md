@@ -103,11 +103,11 @@ Special thanks to Dr. Peggy Gregory for supervision and guidance throughout the 
 
 ## Week 9
 ## 14 Nov 2023
-* *7 hours* Login/register/forgot passowrd and set email confirmations
+* *7 hours* Login/register/forgot password and set email confirmations
 
 ## Week 10
 ## 20 Nov 2023
-* *6 hours* Create and implemnent the to do list functionality
+* *6 hours* Create and implement the to do list functionality
 
 ## 21 Nov 2023
 * *9 hours* Continue working on to do list functionality
@@ -117,10 +117,10 @@ Special thanks to Dr. Peggy Gregory for supervision and guidance throughout the 
 * *4 hours* Create the list of teammates/employees
 
 ## Week 12 - Full week
-* This week I drafted the survey, rafined the existign feautures to havee an MVP and worked on functionalities as quizes, todo, teams, tasks, posts. - *35 hours*
+* This week I drafted the survey, refined the existign features to havee an MVP and worked on functionalities as quizzes, todo, teams, tasks, posts. - *35 hours*
 
 ## Week 13 - Full week
-* This week I final touched exidting product and deployed it on the server for being able to start the survey - *20 hours*
+* This week I finalized and polished the existing product and deployed it on the server for being able to start the survey - *20 hours*
 
 ## Week 14 
 * Christmas break
@@ -156,17 +156,17 @@ Special thanks to Dr. Peggy Gregory for supervision and guidance throughout the 
 
 ## Week 21
 ## 5 Feb 2024
-* *2 hours* Draft/plan for dissertationw riting part.
+* *2 hours* Draft/plan for dissertation writing part.
 
 ## 6 Feb 2024
-* *3 hours* Draft/plan for dissertationw riting part.
+* *3 hours* Draft/plan for dissertation writing part.
 
 ## Week 22
 ## 12 Feb 2024
 * *12 hours* Made a draft for every chapter
 
 ## 14 Feb 2024
-* *3 hours* Worked on teh draft and aksed for feedback from coordinator.
+* *3 hours* Worked on the draft and aksed for feedback from coordinator.
 
 ## Week 23
 ## 20 Feb 2024
@@ -184,7 +184,7 @@ Special thanks to Dr. Peggy Gregory for supervision and guidance throughout the 
 
 ## Week 25
 ## 4 Mar 2024
-* *8 hours* Minor updated to the code. plus writing for dissertation.
+* *8 hours* Minor updates to the code, plus writing for the dissertation.
 
 ## 5 Mar 2024
 * *12 hours* FInal draft for all paper, asked for feedback.
