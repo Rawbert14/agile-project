@@ -62,8 +62,10 @@
         <p> Your number of attempts: {{ quiz.num_attempts }}</p>
         {% if quiz.score <= 80 %}
             <p style="color: red;">Try again until you get 100.</p>
+        {% elif quiz.score > 80%}
+        <p style="color: green;">Well done, you passed this!</p>
         {% else %}
-            <p style="color: green;">Well done, you passed this!</p>
+        <p style="color: orange;">Give it a try!</p>
         {% endif %}
     {% endif %}
 {% endfor %}

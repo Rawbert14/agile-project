@@ -21,7 +21,7 @@ class Category(BaseModel):
 
 class Question(BaseModel):
     category = models.ForeignKey(Category, related_name='questions', on_delete=models.CASCADE)
-    question = models.CharField(max_length=100)
+    question = models.CharField(max_length=1000)
     marks = models.IntegerField(default=5)
 
     def __str__(self) -> str:
