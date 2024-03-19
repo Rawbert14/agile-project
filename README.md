@@ -16,7 +16,7 @@ The Agile Teams App is designed to revolutionize the onboarding process for new 
 - **New Employees**: Access learning materials, participate in quizzes, and interact with the team to smoothly transition into their new roles.
 
 ## Getting Started
-1. **Application**: The app is deployed and can be accessed at the following link: (ADD LINK)
+1. **Application**: The app is deployed and can be accessed at the following link: https://andercorobert.pythonanywhere.com/
 
 ## Technologies Used
 - **Backend**: Django Framework
