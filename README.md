@@ -34,6 +34,12 @@ Comprehensive testing ensures reliability:
 - **Interactive Calendar**: For better tracking of tasks, deadlines, and events.
 - **Project-Task Linkage**: Enhance task management by linking tasks directly to specific projects.
 
+## Project details (project is already deployes at: https://andercorobert.pythonanywhere.com/)
+- **App folder**: All the code and the needed files are found into this application, and each subfolder represents one component of the final application.
+- **Requirements.txt**: This file exists to install all the needed packages/libraries.
+- **Database**: Migrate the database and make sure all static files are also in use.
+- **manage.py**: Run the server locally
+ 
 
 ## Acknowledgments
 Special thanks to Dr. Peggy Gregory for supervision and guidance throughout the development of this project.
